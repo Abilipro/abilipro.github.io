@@ -25,30 +25,30 @@
             stemmer = snowballstemmer.stemmer('english')
             print(stemmer.stemWords('go goes going gone'.split()))
         `);
-        await micropip.install('z3-solver')
+        await micropip.install('ibdp_classes')
         console.log(54321)
         pyodide.runPython(`
-            from z3 import *
-
-            # Create a Z3 string variable
-            hello = String('hello')
-
-            # Create a solver instance
-            solver = Solver()
-
-            # Add a constraint that the variable 'hello' must be equal to "Hello, World!"
-            solver.add(hello == StringVal("Hello, World!"))
-
-            # Check if the constraint is satisfiable
-            if solver.check() == sat:
-                    # Get the model
-                    model = solver.model()
-                    # Print the value of 'hello' from the model
-                    print(model[hello])
-            else:
-                    print("Unsatisfiable")
+            import ibdp_classes as ib
+            
+            code = """\
+            output "Array..."
+            XS = new Array(1, 2, 3, 4, 5)
+            input M as int
+            output M
+            N = 5
+            loop I from 0 to N - 1
+                output "xs[", I, "] = ", XS[I]
+            end loop
+            """
+            
+            # script = ib.Pseudocode(code)
+            # output = script()
+            # print(output)
+            
+            print(ib.Pseudocode(code)())
+            #print(eval("ib.Pseudocode(code)()"))
         `);
-        console.log(6)
+        console.log(6);
       }
       main();
 
