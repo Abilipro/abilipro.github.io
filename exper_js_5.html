@@ -14,9 +14,19 @@
         function myRunPy() {
                 document.getElementById("output").innerText = 123;
         }
+        async function main() {
+          let pyodide = await loadPyodide();
+          // Pyodide is now ready to use...
+          document.getElementById("output").innerText = pyodide.runPython('
+            import sys
+            sys.version
+          ');
+        };
+
         document.getElementById("output").innerText = 1;
-        let window.pyodide = await loadPyodide();
-        document.getElementById("output").innerText = 2;
+        main();
+        // let window.pyodide = await loadPyodide();
+        // document.getElementById("output").innerText = 2;
         // loadPackagesFromImports();
         // document.getElementById("output").innerText = 3;
         // window.pyodide.loadPackagesFromImports();
