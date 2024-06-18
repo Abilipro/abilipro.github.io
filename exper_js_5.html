@@ -9,14 +9,17 @@
 <body>
     <h2>Output:</h2>
     <pre id="output"></pre>
-    <button onclick="runPython()">Run Python</button>
+    <button onclick="myRunPy()">Run Python</button>
     <script>
-        function runPython() {
+        function myRunPy() {
                 document.getElementById("output").innerText = 123;
         }
         document.getElementById("output").innerText = 1;
         window.pyodide = loadPyodide();
         document.getElementById("output").innerText = 2;
+        loadPackagesFromImports();
+        document.getElementById("output").innerText = 3;
+        
         // window.pyodide.loadPackagesFromImports();
         // document.getElementById("output").innerText = 3;
         // await pyodide.loadPackagesFromImports(['micropip']);
