@@ -17,7 +17,7 @@
         document.getElementById("output").innerText = 1;
         window.pyodide = loadPyodide();
         document.getElementById("output").innerText = 2;
-        pyodide.loadPackagesFromImports();
+        window.pyodide.loadPackagesFromImports();
         document.getElementById("output").innerText = 3;
         // await pyodide.loadPackagesFromImports(['micropip']);
         // document.getElementById("output").innerText = 4;
