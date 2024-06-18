@@ -17,12 +17,12 @@
         document.getElementById("output").innerText = 1;
         window.pyodide = loadPyodide();
         document.getElementById("output").innerText = 2;
-        pyodide.loadPackagesFromImports();
+        await pyodide.loadPackagesFromImports();
         document.getElementById("output").innerText = 3;
-        pyodide.loadPackagesFromImports(['micropip']);
+        await pyodide.loadPackagesFromImports(['micropip']);
         document.getElementById("output").innerText = 4;
         const code = `print("Hello, World!")`;
-        // let output = await pyodide.runPythonAsync(code);
+        let output = await pyodide.runPython(code);
         document.getElementById("output").innerText = code;
     </script>
 </body>
