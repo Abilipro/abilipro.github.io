@@ -14,12 +14,16 @@
         function runPython() {
                 document.getElementById("output").innerText = 123;
         }
-        document.getElementById("output").innerText = 333;
+        document.getElementById("output").innerText = 1;
         window.pyodide = loadPyodide();
+        document.getElementById("output").innerText = 2;
         pyodide.loadPackagesFromImports();
+        document.getElementById("output").innerText = 3;
+        pyodide.loadPackagesFromImports(['micropip']);
+        document.getElementById("output").innerText = 4;
         const code = `print("Hello, World!")`;
-        let output = await pyodide.runPythonAsync(code);
-        document.getElementById("output").innerText = output;
+        // let output = await pyodide.runPythonAsync(code);
+        document.getElementById("output").innerText = code;
     </script>
 </body>
 </html>
