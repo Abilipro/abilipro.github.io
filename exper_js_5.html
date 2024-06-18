@@ -19,11 +19,11 @@
         document.getElementById("output").innerText = 2;
         await pyodide.loadPackagesFromImports();
         document.getElementById("output").innerText = 3;
-        await pyodide.loadPackagesFromImports(['micropip']);
-        document.getElementById("output").innerText = 4;
-        const code = `print("Hello, World!")`;
+        // await pyodide.loadPackagesFromImports(['micropip']);
+        // document.getElementById("output").innerText = 4;
+        // const code = `print("Hello, World!")`;
         // let output = await pyodide.runPython(code);
-        document.getElementById("output").innerText = code;
+        // document.getElementById("output").innerText = code;
     </script>
 </body>
 </html>
