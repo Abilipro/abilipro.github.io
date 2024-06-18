@@ -17,13 +17,14 @@
         document.getElementById("output").innerText = 1;
         window.pyodide = loadPyodide();
         document.getElementById("output").innerText = 2;
-        window.pyodide.loadPackagesFromImports();
-        document.getElementById("output").innerText = 3;
+        // window.pyodide.loadPackagesFromImports();
+        // document.getElementById("output").innerText = 3;
         // await pyodide.loadPackagesFromImports(['micropip']);
         // document.getElementById("output").innerText = 4;
-        // const code = `print("Hello, World!")`;
-        // let output = await pyodide.runPython(code);
-        // document.getElementById("output").innerText = code;
+        const code = `print("Hello, World!")`;
+        document.getElementById("output").innerText = code;
+        let output = window.pyodide.runPython(code);
+        document.getElementById("output").innerText = output;
     </script>
 </body>
 </html>
