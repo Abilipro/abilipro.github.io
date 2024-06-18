@@ -15,7 +15,7 @@
                 document.getElementById("output").innerText = 123;
         }
         document.getElementById("output").innerText = 333;
-        window.pyodide = await loadPyodide();
+        window.pyodide = loadPyodide();
         document.getElementById("output").innerText = 321;
     </script>
 </body>
