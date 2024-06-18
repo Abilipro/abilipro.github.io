@@ -20,6 +20,11 @@
         const micropip = pyodide.pyimport("micropip");
         await micropip.install('snowballstemmer');
         console.log(12345);
+        pyodide.runPython(`
+            import snowballstemmer
+            stemmer = snowballstemmer.stemmer('english')
+            print(stemmer.stemWords('go goes going gone'.split()))
+        `);
       }
       main();
 
