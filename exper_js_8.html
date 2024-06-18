@@ -11,10 +11,10 @@
     <script type="text/javascript">
       async function main(){
         let pyodide = await loadPyodide();
-        console.log(pyodide.runPython('
+        console.log(pyodide.runPython(`
             import sys
             sys.version
-        '));
+        `));
         pyodide.runPython("print(4 + 5)");
       }
       main();
