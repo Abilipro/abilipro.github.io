@@ -16,12 +16,13 @@
             sys.version
         `));
         pyodide.runPython("print(4 + 5)");
+        await pyodide.loadPackage("micropip");
+        const micropip = pyodide.pyimport("micropip");
+        await micropip.install('snowballstemmer');
+        console.log(12345);
       }
       main();
-      await pyodide.loadPackage("micropip");
-      const micropip = pyodide.pyimport("micropip");
-      await micropip.install('snowballstemmer');
-      console.log(12345);
+
     </script>
   </body>
 </html>
