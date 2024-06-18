@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Python in Browser with Brython</title>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/brython@3.9.5/brython.min.js"></script>
+</head>
+<body onload="brython()">
+    <h1>Python Code Runner</h1>
+    <textarea id="codeInput" rows="10" cols="50" placeholder="Enter your Python code here"></textarea><br>
+    <button onclick="runCode()">Run Code</button>
+    <h2>Output:</h2>
+    <pre id="output"></pre>
+
+    <script type="text/python">
+        from browser import document, ajax
+
+        def runCode(ev):
+            code = document["codeInput"].value
+            output = document["output"]
+            try:
+                exec(code)
+            except Exception as e:
+                output.text = str(e)
+            else:
+                output.text = "Code executed successfully."
+
+        document["runCode"].bind("click", runCode)
+    </script>
+</body>
+</html>
