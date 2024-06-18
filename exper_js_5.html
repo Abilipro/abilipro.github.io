@@ -22,7 +22,7 @@
         await pyodide.loadPackagesFromImports(['micropip']);
         document.getElementById("output").innerText = 4;
         const code = `print("Hello, World!")`;
-        let output = await pyodide.runPython(code);
+        // let output = await pyodide.runPython(code);
         document.getElementById("output").innerText = code;
     </script>
 </body>
