@@ -18,7 +18,7 @@
         window.pyodide = loadPyodide();
         pyodide.loadPackagesFromImports();
         const code = `print("Hello, World!")`;
-        output = pyodide.runPythonAsync(code);
+        output = pyodide.runPython(code);
         document.getElementById("output").innerText = output;
     </script>
 </body>
