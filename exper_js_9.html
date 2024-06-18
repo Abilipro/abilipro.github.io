@@ -25,6 +25,30 @@
             stemmer = snowballstemmer.stemmer('english')
             print(stemmer.stemWords('go goes going gone'.split()))
         `);
+        await micropip.install('z3-solver')
+        console.log(54321)
+        pyodide.runPython(`
+            from z3 import *
+
+            # Create a Z3 string variable
+            hello = String('hello')
+
+            # Create a solver instance
+            solver = Solver()
+
+            # Add a constraint that the variable 'hello' must be equal to "Hello, World!"
+            solver.add(hello == StringVal("Hello, World!"))
+
+            # Check if the constraint is satisfiable
+            if solver.check() == sat:
+                    # Get the model
+                    model = solver.model()
+                    # Print the value of 'hello' from the model
+                    print(model[hello])
+            else:
+                    print("Unsatisfiable")
+        `);
+        console.log(6)
       }
       main();
 
