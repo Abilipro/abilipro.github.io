@@ -4,12 +4,24 @@
       <script src="https://cdn.jsdelivr.net/pyodide/v0.26.1/full/pyodide.js"></script>
   </head>
   <body>
-    Pyodide test page <br>
-    My output is: <pre id="output"></pre> <br>
-    Open your browser console to see Pyodide output
+    <h1>IBCS Pseudocode Runner</h1>
+    <textarea id="pseudoCode" rows="10" cols="30" placeholder="Enter your code here..."></textarea>
+    <br>
+    <textarea id="inputData" rows="10" cols="30" placeholder="Enter your input data here..."></textarea>
+    <br>
+    <!-- Button to trigger the JavaScript function -->
+    <button id="runButton">Run Pseudocode</button>
+    <br> <br> <br>
+    The output is: 
+    <br>
+    <pre id="output"></pre>
     
+
     <script type="text/javascript">
-      async function main(){
+      async function runCode(){
+        const pseudoCode = document.getElementById('pseudoCode').value;
+        const inputData = document.getElementById('inputData').value;
+
         let pyodide = await loadPyodide();
         console.log(pyodide.runPython(`
             import sys
@@ -61,8 +73,7 @@
         document.getElementById('output').innerText = outputStr;
       }
     
-      main();
-      
+      document.getElementById('runButton').addEventListener('click', runCode);      
     </script>
   </body>
 </html>
