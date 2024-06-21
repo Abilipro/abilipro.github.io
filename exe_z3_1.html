@@ -11,7 +11,7 @@
 import micropip
 
 # Use micropip to install the z3-solver package from the URL
-await micropip.install('https://abilipro.com/z3_solver-4.8.10-py2.py3-none-any.whl')
+await micropip.install('https://github.com/Abilipro/abilipro.github.io/releases/download/v0.1/z3_solver-4.13.0.0-py2.py3-none-win_amd64.whl')
 
 import z3
 
@@ -28,8 +28,10 @@ print(s.model())
     <script src="https://cdn.jsdelivr.net/pyodide/v0.18.1/full/pyodide.js"></script>
     <script>
         async function loadPyodideAndPackages() {
-            // Load Pyodide
-            let pyodide = await loadPyodide();
+            // Load Pyodide with the correct indexURL
+            let pyodide = await loadPyodide({
+                indexURL: "https://cdn.jsdelivr.net/pyodide/v0.18.1/full/"
+            });
             // Load micropip
             await pyodide.loadPackage('micropip');
             return pyodide;
