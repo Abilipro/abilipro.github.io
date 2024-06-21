@@ -1,36 +1,30 @@
-name: Run Java Code
+name: Build and Deploy
 
 on:
-  repository_dispatch:
-    types: [run-java-code]
+  push:
+    branches:
+      - main
 
 jobs:
-  run-java:
+  build:
     runs-on: ubuntu-latest
+
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
 
-      - name: Set up JDK
-        uses: actions/setup-java@v2
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
         with:
-          java-version: '11'
+          node-version: '14'
 
-      - name: Create Java file
+      - name: Install dependencies and build
         run: |
-          echo "${{ github.event.client_payload.java_code }}" > Main.java
+          npm install
+          npm run build  # Adjust this if you have a build process
 
-      - name: Compile Java code
-        run: javac Main.java
-
-      - name: Run Java code
-        run: |
-          echo "${{ github.event.client_payload.input_data }}" | java Main > output.txt
-          cat output.txt
-        id: run_java
-
-      - name: Create output artifact
-        uses: actions/upload-artifact@v2
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v3
         with:
-          name: java-output
-          path: output.txt
+          github_token: ${{ secrets.GH_TOKEN }}
+          publish_dir: ./dist  # Adjust if needed
