@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Run Java Code in Browser</title>
+    <script src="https://plasma-umass.org/DoppioJVM/installer/install.js"></script>
+</head>
+<body>
+    <h1>Enter Java Code</h1>
+    <form>
+        <textarea id="javaCode" rows="20" cols="80" placeholder="Enter your Java code here..."></textarea><br>
+        <button type="button" onclick="runCode()">Run Code</button>
+    </form>
+    <pre id="output"></pre>
+
+    <script>
+        async function runCode() {
+            const javaCode = document.getElementById('javaCode').value;
+            const outputElement = document.getElementById('output');
+            outputElement.textContent = "Running...";
+
+            const code = `
+            public class Main {
+                public static void main(String[] args) {
+                    ${javaCode}
+                }
+            }`;
+
+            const blob = new Blob([code], { type: 'text/plain' });
+            const url = URL.createObjectURL(blob);
+
+            try {
+                await DoppioJVM.install(['Main.class']);
+                DoppioJVM.runClass('Main', [], (output) => {
+                    outputElement.textContent = output;
+                });
+            } catch (err) {
+                outputElement.textContent = "Error: " + err.message;
+            }
+        }
+    </script>
+</body>
+</html>
