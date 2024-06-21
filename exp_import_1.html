@@ -38,6 +38,7 @@
             print(stemmer.stemWords('go goes going gone'.split()))
         `);
         await micropip.install('ibdp_classes')
+        await micropip.install('z3-solver')
         console.log(54321)
         pyodide.globals.set("pseudoCode", pseudoCode);
         pyodide.globals.set("inputData", inputData);
