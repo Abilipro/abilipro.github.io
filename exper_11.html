@@ -39,15 +39,18 @@
         `);
         await micropip.install('ibdp_classes')
         console.log(54321)
+        pyodide.globals.set("pseudoCode", pseudoCode);
+        pyodide.globals.set("inputData", inputData);
+        
         pyodide.runPython(`
             import ibdp_classes as ib
             import io
             import sys
 
-            code = pyodide.globals.get("pseudoCode");
+            code = globals()["pseudoCode"];
+            input_str = globals()["inputData"];
 
             orig_stdin = sys.stdin
-            input_str = pyodide.globals.get("inputData")
             sys.stdin = io.StringIO(input_str)
             output_str = str(ib.Pseudocode(code)())
             sys.stdin = orig_stdin
