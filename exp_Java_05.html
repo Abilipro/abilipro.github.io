@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Run Java Code in Browser</title>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/typescript/4.1.5/typescript.min.js"></script>
+    <script src="https://www.jsweet.org/jsweet-web.min.js"></script>
+</head>
+<body>
+    <h1>Enter Java Code</h1>
+    <textarea id="javaCode" rows="20" cols="80" placeholder="Enter your Java code here..."></textarea><br>
+    <button onclick="transpileAndRun()">Run Code</button>
+    <pre id="output"></pre>
+
+    <script>
+        function transpileAndRun() {
+            const javaCode = document.getElementById('javaCode').value;
+            const outputElement = document.getElementById('output');
+            outputElement.textContent = "Transpiling and Running...";
+
+            const wrappedCode = `
+            public class Main {
+                public static void main(String[] args) {
+                    ${javaCode}
+                }
+            }`;
+
+            try {
+                const transpiler = new JSweetTranspiler();
+                transpiler.setOptions({ bundle: true });
+                transpiler.transpile([wrappedCode]).then(result => {
+                    const transpiledCode = result.bundle;
+                    outputElement.textContent = "Running transpiled code...";
+                    runJavaScript(transpiledCode);
+                }).catch(err => {
+                    outputElement.textContent = "Error during transpiling: " + err.message;
+                });
+            } catch (err) {
+                outputElement.textContent = "Error: " + err.message;
+            }
+        }
+
+        function runJavaScript(jsCode) {
+            const outputElement = document.getElementById('output');
+            try {
+                const blob = new Blob([jsCode], { type: 'application/javascript' });
+                const url = URL.createObjectURL(blob);
+                const worker = new Worker(url);
+
+                worker.onmessage = function(e) {
+                    outputElement.textContent = e.data;
+                };
+
+                worker.onerror = function(e) {
+                    outputElement.textContent = "Error in running code: " + e.message;
+                };
+            } catch (err) {
+                outputElement.textContent = "Error: " + err.message;
+            }
+        }
+    </script>
+</body>
+</html>

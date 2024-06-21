@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Run Java Code</title>
+    <script src="https://www.javapoly.com/javapoly.js"></script>
+</head>
+<body>
+    <h1>Enter Java Code</h1>
+    <form>
+        <textarea id="javaCode" rows="20" cols="80" placeholder="Enter your Java code here..."></textarea><br>
+        <button type="button" onclick="runCode()">Run Code</button>
+    </form>
+    <pre id="output"></pre>
+
+    <script>
+        function runCode() {
+            const javaCode = document.getElementById('javaCode').value;
+            const outputElement = document.getElementById('output');
+            outputElement.textContent = "Running...";
+
+            const code = `
+            public class Main {
+                public static void main(String[] args) {
+                    ${javaCode}
+                }
+            }`;
+
+            JavaPoly.load().then(() => {
+                JavaPoly.eval(code).then((result) => {
+                    outputElement.textContent = result;
+                }).catch((err) => {
+                    outputElement.textContent = "Error: " + err.message;
+                });
+            });
+        }
+    </script>
+</body>
+</html>

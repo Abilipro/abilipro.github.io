@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Python in Browser with Pyodide</title>
+    <script src="https://cdn.jsdelivr.net/pyodide/v0.18.1/full/pyodide.js"></script>
+</head>
+<body>
+    <h1>Python Code Runner</h1>
+    <textarea id="codeInput" rows="10" cols="50" placeholder="Enter your Python code here"></textarea><br>
+    <button onclick="runCode()">Run Code</button>
+    <h2>Output:</h2>
+    <pre id="output"></pre>
+
+    <script>
+        async function loadPyodideAndPackages() {
+            self.pyodide = await loadPyodide();
+            await pyodide.loadPackage(['numpy', 'matplotlib']);  // Example packages
+        }
+        loadPyodideAndPackages();
+
+        async function runCode() {
+            const code = document.getElementById("codeInput").value;
+            let outputElement = document.getElementById("output");
+            try {
+                let output = await pyodide.runPythonAsync(code);
+                outputElement.innerText = output;
+            } catch (err) {
+                outputElement.innerText = err;
+            }
+        }
+    </script>
+</body>
+</html>

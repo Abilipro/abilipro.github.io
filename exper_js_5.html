@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hello, World with Pyodide</title>
+    <script src="https://cdn.jsdelivr.net/pyodide/v0.18.1/full/pyodide.js"></script>
+</head>
+<body>
+    <h2>Output:</h2>
+    <pre id="output"></pre>
+    <button onclick="myRunPy()">Run Python</button>
+    <script>
+        function myRunPy() {
+                document.getElementById("output").innerText = 123;
+        }
+        async function main() {
+          let pyodide = await loadPyodide();
+          // Pyodide is now ready to use...
+          document.getElementById("output").innerText = pyodide.runPython('
+            import sys
+            sys.version
+          ');
+        };
+
+        document.getElementById("output").innerText = 1;
+        main();
+        // let window.pyodide = await loadPyodide();
+        // document.getElementById("output").innerText = 2;
+        // loadPackagesFromImports();
+        // document.getElementById("output").innerText = 3;
+        // window.pyodide.loadPackagesFromImports();
+        // document.getElementById("output").innerText = 3;
+        // await pyodide.loadPackagesFromImports(['micropip']);
+        // document.getElementById("output").innerText = 4;
+        
+        //const code = 'print("Hello, World!")';
+        //document.getElementById("output").innerText = 5;
+        //output = runPython(code);
+        //document.getElementById("output").innerText = output;
+    </script>
+</body>
+</html>

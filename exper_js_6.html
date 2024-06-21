@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hello, World with Pyodide</title>
+    <script src="https://cdn.jsdelivr.net/pyodide/v0.18.1/full/pyodide.js"></script>
+</head>
+<body>
+    <h2>Output:</h2>
+    <pre id="output"></pre>
+    <button onclick="myRunPy()">Run Python</button>
+    <script>
+        function myRunPy() {
+            document.getElementById("output").innerText = 123;
+        }
+
+        document.getElementById("output").innerText = 1;
+
+        loadPyodide().then(pyodide => {
+            window.pyodide = pyodide;
+            document.getElementById("output").innerText = 2;
+            
+            // Load packages if needed
+            pyodide.loadPackagesFromImports().then(() => {
+                document.getElementById("output").innerText = 3;
+
+                const code = `print("Hello, World!")`;
+                const output = pyodide.runPython(code);
+                document.getElementById("output").innerText = output;
+            });
+        });
+    </script>
+</body>
+</html>

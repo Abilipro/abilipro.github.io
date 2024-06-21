@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Run Java Code in Browser</title>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+</head>
+<body>
+    <h1>Enter Java-like Code</h1>
+    <textarea id="javaCode" rows="20" cols="80" placeholder="Enter your Java-like code here..."></textarea><br>
+    <button onclick="transpileAndRun()">Run Code</button>
+    <pre id="output"></pre>
+
+    <script>
+        function transpileAndRun() {
+            const javaCode = document.getElementById('javaCode').value;
+            const outputElement = document.getElementById('output');
+            outputElement.textContent = "Transpiling and Running...";
+
+            try {
+                // Transpile Java-like code to JavaScript using Babel
+                const transpiledCode = Babel.transform(javaCode, { presets: ['env'] }).code;
+
+                // Run the transpiled code in a web worker to keep the UI responsive
+                const blob = new Blob([transpiledCode], { type: 'application/javascript' });
+                const url = URL.createObjectURL(blob);
+                const worker = new Worker(url);
+
+                worker.onmessage = function(e) {
+                    outputElement.textContent = e.data;
+                };
+
+                worker.onerror = function(e) {
+                    outputElement.textContent = "Error in running code: " + e.message;
+                };
+
+                worker.postMessage(null);
+            } catch (err) {
+                outputElement.textContent = "Error: " + err.message;
+            }
+        }
+    </script>
+</body>
+</html>

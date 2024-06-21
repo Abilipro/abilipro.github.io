@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PyScript Example</title>
+  <link rel="stylesheet" href="pyscript.css">
+  <script defer src="pyscript.js"></script>
+</head>
+<body>
+  <h1>Random Number Generator</h1>
+  <button id="get-random">Get Random Number</button>
+  <p id="random-number"></p>
+
+  <py-script>
+    import random
+
+    def get_random_number():
+      number = random.randint(1, 100)
+      document.getElementById("random-number").innerHTML = f"The random number is: {number}"
+
+    # Connect button click to the function (within py-script)
+    button = document.getElementById("get-random")
+    button.addEventListener("click", get_random_number)
+  </py-script>
+</body>
+</html>

@@ -1,0 +1,57 @@
+<!doctype html>
+<html>
+  <head>
+      <script src="https://cdn.jsdelivr.net/pyodide/v0.26.1/full/pyodide.js"></script>
+  </head>
+  <body>
+    Pyodide test page <br>
+    My output is: <pre id="output"></pre> <br>
+    Open your browser console to see Pyodide output
+    
+    <script type="text/javascript">
+      async function main(){
+        let pyodide = await loadPyodide();
+        console.log(pyodide.runPython(`
+            import sys
+            sys.version
+        `));
+        pyodide.runPython("print(4 + 5)");
+        await pyodide.loadPackage("micropip");
+        const micropip = pyodide.pyimport("micropip");
+        await micropip.install('snowballstemmer');
+        console.log(12345);
+        pyodide.runPython(`
+            import snowballstemmer
+            stemmer = snowballstemmer.stemmer('english')
+            print(stemmer.stemWords('go goes going gone'.split()))
+        `);
+        await micropip.install('ibdp_classes')
+        console.log(54321)
+        pyodide.runPython(`
+            import ibdp_classes as ib
+            
+            code = """\
+            output "Array..."
+            XS = new Array(1, 2, 3, 4, 5)
+            # input M as int
+            # output M
+            N = 5
+            loop I from 0 to N - 1
+                output "xs[", I, "] = ", XS[I]
+            end loop
+            """
+            
+            # script = ib.Pseudocode(code)
+            # output = script()
+            # print(output)
+            
+            print(ib.Pseudocode(code)())
+            #print(eval("ib.Pseudocode(code)()"))
+        `);
+        console.log(6);
+      }
+      main();
+
+    </script>
+  </body>
+</html>
