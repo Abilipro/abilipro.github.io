@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Text Area Example</title>
+</head>
+<body>
+    <h1>Text Area Example</h1>
+    <!-- Text area for user input -->
+    <textarea id="textInput" rows="10" cols="30" placeholder="Enter your text here..."></textarea>
+    <br>
+    <!-- Button to trigger the JavaScript function -->
+    <button id="logButton">Log Text</button>
+
+    <!-- Script section to handle the button click event -->
+    <script>
+        // Function to log the text input to the console
+        function logText() {
+            // Get the value of the text area
+            const text = document.getElementById('textInput').value;
+            // Log the value to the console
+            console.log(text);
+            document.getElementById('output').innerText = text;
+        }
+
+        // Add an event listener to the button to call the logText function on click
+        document.getElementById('logButton').addEventListener('click', logText);
+    </script>
+
+    <br><br><br>
+    <par id="output"></par>
+</body>
+</html>
