@@ -4,18 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Run Java Code</title>
-    <script src="https://javapoly.com/javapoly.js"></script>
+    <script src="https://www.javapoly.com/javapoly.js"></script>
 </head>
 <body>
     <h1>Enter Java Code</h1>
     <form>
-        <textarea id="javaCode" rows="20" cols="80">
-System.out.println("Hello, World!");
-int a = 5;
-int b = 10;
-int sum = a + b;
-System.out.println("The sum of " + a + " and " + b + " is: " + sum);
-        </textarea><br>
+        <textarea id="javaCode" rows="20" cols="80" placeholder="Enter your Java code here..."></textarea><br>
         <button type="button" onclick="runCode()">Run Code</button>
     </form>
     <pre id="output"></pre>
