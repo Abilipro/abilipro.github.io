@@ -1,34 +1,66 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Text Area Example</title>
-</head>
-<body>
-    <h1>Text Area Example</h1>
-    <!-- Text area for user input -->
-    <textarea id="textInput" rows="10" cols="30" placeholder="Enter your text here..."></textarea>
-    <br>
-    <!-- Button to trigger the JavaScript function -->
-    <button id="logButton">Log Text</button>
+<!doctype html>
+<html>
+  <head>
+      <script src="https://cdn.jsdelivr.net/pyodide/v0.26.1/full/pyodide.js"></script>
+  </head>
+  <body>
+    Pyodide test page <br>
+    My output is: <pre id="output"></pre> <br>
+    Open your browser console to see Pyodide output
+    
+    <script type="text/javascript">
+      async function main(){
+        let pyodide = await loadPyodide();
+        console.log(pyodide.runPython(`
+            import sys
+            sys.version
+        `));
+        pyodide.runPython("print(4 + 5)");
+        await pyodide.loadPackage("micropip");
+        const micropip = pyodide.pyimport("micropip");
+        await micropip.install('snowballstemmer');
+        console.log(12345);
+        pyodide.runPython(`
+            import snowballstemmer
+            stemmer = snowballstemmer.stemmer('english')
+            print(stemmer.stemWords('go goes going gone'.split()))
+        `);
+        await micropip.install('ibdp_classes')
+        console.log(54321)
+        pyodide.runPython(`
+            import ibdp_classes as ib
+            import io
+            import sys
 
-    <!-- Script section to handle the button click event -->
-    <script>
-        // Function to log the text input to the console
-        function logText() {
-            // Get the value of the text area
-            const text = document.getElementById('textInput').value;
-            // Log the value to the console
-            console.log(text);
-            document.getElementById('output').innerText = text;
-        }
+            code = """\
+            output "Array..."
+            XS = new Array(1, 2, 3, 4, 5)
+            input M as int
+            output M
+            N = 5
+            loop I from 0 to N - 1
+                output "xs[", I, "] = ", XS[I]
+            end loop
+            """
 
-        // Add an event listener to the button to call the logText function on click
-        document.getElementById('logButton').addEventListener('click', logText);
+            orig_stdin = sys.stdin
+            input_str = "155"
+            sys.stdin = io.StringIO(input_str)
+            output_str = str(ib.Pseudocode(code)())
+            sys.stdin = orig_stdin
+
+            print(output_str)
+        `);
+        let capturedOutput = pyodide.globals.get('captured_output');
+        let capturedError = pyodide.globals.get('captured_error');
+        let outputStr = pyodide.globals.get('output_str');
+        console.log(capturedOutput);
+        console.log(capturedError);
+        console.log(outputStr);
+      }
+    
+      main();
     </script>
-
-    <br><br><br>
-    <par id="output"></par>
-</body>
+  </body>
 </html>
+
