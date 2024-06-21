@@ -1,0 +1,15 @@
+import subprocess
+import sys
+
+def install(package):
+    subprocess.check_call([sys.executable, "-m", "pip", "install", package])
+
+# Example usage:
+install('requests')
+
+# Verify the installation
+import requests
+
+response = requests.get('https://api.github.com')
+print(response.status_code)
+print("done")
