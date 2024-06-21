@@ -21,10 +21,12 @@
             const text = document.getElementById('textInput').value;
             // Log the value to the console
             console.log(text);
+            document.getElementById('output').innerText = text;
         }
 
         // Add an event listener to the button to call the logText function on click
         document.getElementById('logButton').addEventListener('click', logText);
     </script>
+    <par id="output"></par>
 </body>
 </html>
