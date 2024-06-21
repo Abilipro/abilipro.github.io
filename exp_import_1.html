@@ -1,15 +1,91 @@
-import subprocess
-import sys
+<!doctype html>
+<html>
+  <head>
+      <script src="https://cdn.jsdelivr.net/pyodide/v0.26.1/full/pyodide.js"></script>
+  </head>
+  <body>
+    <h1>IBCS Pseudocode Runner</h1>
+    <textarea id="pseudoCode" rows="10" cols="30" placeholder="Enter your code here..."></textarea>
+    <br>
+    <textarea id="inputData" rows="2" cols="30" placeholder="Enter your input data here..."></textarea>
+    <br>
+    <!-- Button to trigger the JavaScript function -->
+    <button id="runButton">Run Pseudocode</button>
+    <br> <br> <br>
+    The output is: 
+    <br>
+    <pre id="output"></pre>
+    
 
-def install(package):
-    subprocess.check_call([sys.executable, "-m", "pip", "install", package])
+    <script type="text/javascript">
+      async function runCode(){
+        const pseudoCode = document.getElementById('pseudoCode').value;
+        const inputData = document.getElementById('inputData').value;
 
-# Example usage:
-install('requests')
+        let pyodide = await loadPyodide();
+        console.log(pyodide.runPython(`
+            import sys
+            sys.version
+        `));
+        pyodide.runPython("print(4 + 5)");
+        await pyodide.loadPackage("micropip");
+        const micropip = pyodide.pyimport("micropip");
+        await micropip.install('snowballstemmer');
+        console.log(12345);
+        pyodide.runPython(`
+            import snowballstemmer
+            stemmer = snowballstemmer.stemmer('english')
+            print(stemmer.stemWords('go goes going gone'.split()))
+        `);
+        await micropip.install('ibdp_classes')
+        console.log(54321)
+        pyodide.globals.set("pseudoCode", pseudoCode);
+        pyodide.globals.set("inputData", inputData);
+        
+        pyodide.runPython(`
+            import subprocess
+            import sys
+    
+            def install(package):
+                subprocess.check_call([sys.executable, "-m", "pip", "install", package])
+    
+            # Example usage:
+            install('requests')
+    
+            # Verify the installation
+            import requests
+    
+            response = requests.get('https://api.github.com')
+            print(response.status_code)
+            print("done")
 
-# Verify the installation
-import requests
+            import ibdp_classes as ib
+            import io
+            import sys
 
-response = requests.get('https://api.github.com')
-print(response.status_code)
-print("done")
+            code = globals()["pseudoCode"];
+            input_str = globals()["inputData"];
+
+            orig_stdin = sys.stdin
+            sys.stdin = io.StringIO(input_str)
+            output_str = str(ib.Pseudocode(code)())
+            sys.stdin = orig_stdin
+
+            print(output_str)
+        `);
+        let capturedOutput = pyodide.globals.get('captured_output');
+        let capturedError = pyodide.globals.get('captured_error');
+        let outputStr = pyodide.globals.get('output_str');
+        console.log(capturedOutput);
+        console.log(capturedError);
+        console.log(outputStr);
+
+        document.getElementById('output').innerText = outputStr;
+      }
+    
+      document.getElementById('runButton').addEventListener('click', runCode);      
+    </script>
+  </body>
+</html>
+
+
