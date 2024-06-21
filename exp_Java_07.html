@@ -1,0 +1,99 @@
+<!doctype html>
+<html>
+  <head>
+      <script src="https://cdn.jsdelivr.net/pyodide/v0.26.1/full/pyodide.js"></script>
+  </head>
+  <body>
+    <h1>IBCS Pseudocode Runner</h1>
+    <textarea id="pseudoCode" rows="10" cols="30" placeholder="Enter your code here..."></textarea>
+    <br>
+    <textarea id="inputData" rows="2" cols="30" placeholder="Enter your input data here..."></textarea>
+    <br>
+    <!-- Button to trigger the JavaScript function -->
+    <button id="runButton">Run Pseudocode</button>
+    <br> <br> <br>
+    The output is: 
+    <br>
+    <pre id="output"></pre>
+    
+
+    <script type="text/javascript">
+      async function runCode(){
+        const pseudoCode = document.getElementById('pseudoCode').value;
+        const inputData = document.getElementById('inputData').value;
+
+        let pyodide = await loadPyodide();
+        console.log(pyodide.runPython(`
+            import sys
+            sys.version
+        `));
+        pyodide.runPython("print(4 + 5)");
+        await pyodide.loadPackage("micropip");
+        const micropip = pyodide.pyimport("micropip");
+        await micropip.install('snowballstemmer');
+        console.log(12345);
+        pyodide.runPython(`
+            import snowballstemmer
+            stemmer = snowballstemmer.stemmer('english')
+            print(stemmer.stemWords('go goes going gone'.split()))
+        `);
+
+        pyodide.runPython(`
+          # Install Java
+          !apt-get install openjdk-11-jdk-headless -qq > /dev/null
+          
+          # Verify Java installation
+          !java -version
+          
+          # Write Java code to a file
+          code = """
+          public class HelloWorld {
+              public static void main(String[] args) {
+                  System.out.println("Hello, World of Java!");
+              }
+          }
+          """
+          with open("HelloWorld.java", "w") as file:
+              file.write(code)
+          
+          # Compile Java code
+          !javac HelloWorld.java
+          
+          # Run Java code
+          !java HelloWorld
+        }
+
+        await micropip.install('ibdp_classes')
+        console.log(54321)
+        pyodide.globals.set("pseudoCode", pseudoCode);
+        pyodide.globals.set("inputData", inputData);
+        
+        pyodide.runPython(`
+            import ibdp_classes as ib
+            import io
+            import sys
+
+            code = globals()["pseudoCode"];
+            input_str = globals()["inputData"];
+
+            orig_stdin = sys.stdin
+            sys.stdin = io.StringIO(input_str)
+            output_str = str(ib.Pseudocode(code)())
+            sys.stdin = orig_stdin
+
+            print(output_str)
+        `);
+        let capturedOutput = pyodide.globals.get('captured_output');
+        let capturedError = pyodide.globals.get('captured_error');
+        let outputStr = pyodide.globals.get('output_str');
+        console.log(capturedOutput);
+        console.log(capturedError);
+        console.log(outputStr);
+
+        document.getElementById('output').innerText = outputStr;
+      }
+    
+      document.getElementById('runButton').addEventListener('click', runCode);      
+    </script>
+  </body>
+</html>
