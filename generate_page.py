@@ -8,6 +8,7 @@ content = f"""
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>My GitHub Page</title>
+    <meta name="github-token" content="GITHUB_TOKEN_PLACEHOLDER">
 </head>
 <body>
     <h1>Welcome to My GitHub Page</h1>
@@ -18,11 +19,12 @@ content = f"""
 
     <script>
         document.getElementById("run-action-button").addEventListener("click", function(){
+            const token = document.querySelector('meta[name="github-token"]').content;
             fetch('https://api.github.com/repos/Abilipro/abilipro.github.io/dispatches', {
                 method: 'POST',
                 headers: {
                     'Accept': 'application/vnd.github.everest-preview+json',
-                    'Authorization': 'Bearer GITHUB_TOKEN'
+                    'Authorization': `Bearer ${token}`
                 },
                 body: JSON.stringify({
                     event_type: 'run-action'
