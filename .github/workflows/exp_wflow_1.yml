@@ -3,7 +3,6 @@ name: Run Python Script and Update GitHub Pages
 on:
   repository_dispatch:
     types: [run-action]  # Custom event type
-  workflow_dispatch:  # New trigger for manual triggering
 
 jobs:
   build:
@@ -23,7 +22,11 @@ jobs:
         GITHUB_TOKEN: ${{ secrets.GH_PAT }}
       run: |
         python generate_page.py
+        echo "Before replacement:"
+        cat exp_actions_1.html
         sed -i "s/GITHUB_TOKEN_PLACEHOLDER/${{ secrets.GH_PAT }}/" exp_actions_1.html
+        echo "After replacement:"
+        cat exp_actions_1.html
 
     - name: Commit and Push changes
       run: |
