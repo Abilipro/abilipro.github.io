@@ -10,8 +10,30 @@
     <p>This page was generated manually.</p>
     <h2>Trigger Action</h2>
     <p>Click the button below to run the Python script and update this page:</p>
-    <a href="https://github-action-button.web.app/repos/Abilipro/abilipro.github.io/button?name=Run&eventType=run-action&type=simple&action=dispatch">
-        <img src="https://github-action-button.web.app/buttons/simple.svg?name=Run&eventType=run-action&type=simple&action=dispatch" alt="Run Action">
-    </a>
+    <button id="run-action-button">Run Action</button>
+
+    <script>
+        document.getElementById("run-action-button").addEventListener("click", function(){
+            fetch('https://api.github.com/repos/Abilipro/abilipro.github.io/dispatches', {
+                method: 'POST',
+                headers: {
+                    'Accept': 'application/vnd.github.everest-preview+json',
+                    'Authorization': 'Bearer YOUR_GITHUB_PERSONAL_ACCESS_TOKEN'
+                },
+                body: JSON.stringify({
+                    event_type: 'run-action'
+                })
+            }).then(response => {
+                if(response.ok) {
+                    alert("Action triggered successfully!");
+                } else {
+                    alert("Failed to trigger action.");
+                }
+            }).catch(error => {
+                console.error('Error:', error);
+                alert("Error triggering action.");
+            });
+        });
+    </script>
 </body>
 </html>
