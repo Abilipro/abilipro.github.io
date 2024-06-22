@@ -1,0 +1,29 @@
+name: Run Python Script and Update GitHub Pages
+
+on:
+  repository_dispatch:
+    types: [run-action]  # Custom event type
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+
+    - name: Set up Python
+      uses: actions/setup-python@v2
+      with:
+        python-version: '3.x'  # Specify the Python version you need
+
+    - name: Run Python script
+      run: python generate_page.py
+
+    - name: Commit and Push changes
+      run: |
+        git config --global user.name 'Abilipro'
+        git config --global user.email 'abilipro@outlook.com'
+        git add exp_actions_1.html
+        git commit -m "Update exp_actions_1.html with new content"
+        git push
