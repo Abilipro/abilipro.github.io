@@ -18,6 +18,8 @@ jobs:
         python-version: '3.x'  # Specify the Python version you need
 
     - name: Run Python script
+      env:
+        GITHUB_TOKEN: ${{ secrets.GH_PAT }}
       run: python generate_page.py
 
     - name: Commit and Push changes
