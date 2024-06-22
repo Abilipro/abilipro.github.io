@@ -8,12 +8,17 @@
 <body>
     <h1>Pyodide Example with z3.wasm</h1>
     <textarea id="python-code" rows="10" cols="50">
-import pyodide
+import micropip
 
-# Load the z3.wasm file
-await pyodide.loadPackage("https://github.com/Abilipro/abilipro.github.io/blob/main/z3-built.zip")
+# Use micropip to install the package from the URL
+await micropip.install('https://github.com/Abilipro/abilipro.github.io/raw/main/z3-built.zip')
 
-# Import the Z3 solver
+import z3_solver_package
+
+wasm_path = z3_solver_package.get_wasm_path()
+print(f"WASM path: {wasm_path}")
+
+# Import the Z3 solver from the package
 import z3
 
 x = z3.Int('x')
@@ -36,6 +41,8 @@ print(f"Model: {model}")
             let pyodide = await loadPyodide({
                 indexURL: "https://cdn.jsdelivr.net/pyodide/v0.18.1/full/"
             });
+            // Load micropip
+            await pyodide.loadPackage('micropip');
             return pyodide;
         }
 
