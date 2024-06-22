@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pyodide Example with z3.wasm</title>
+</head>
+<body>
+    <h1>Pyodide Example with z3.wasm</h1>
+    <textarea id="python-code" rows="10" cols="50">
+import micropip
+
+# Use micropip to install the package from the URL
+await micropip.install('https://github.com/Abilipro/abilipro.github.io/raw/main/z3-built.zip')
+
+import z3_solver_package
+
+wasm_path = z3_solver_package.get_wasm_path()
+print(f"WASM path: {wasm_path}")
+
+# Import the Z3 solver from the package
+import z3
+
+x = z3.Int('x')
+s = z3.Solver()
+s.add(x > 10)
+result = s.check()
+model = s.model() if result == z3.sat else None
+
+print(f"Result: {result}")
+print(f"Model: {model}")
+    </textarea>
+    <br>
+    <button onclick="runPythonCode()">Run Python Code</button>
+    <pre id="output"></pre>
+
+    <script src="https://cdn.jsdelivr.net/pyodide/v0.18.1/full/pyodide.js"></script>
+    <script>
+        async function loadPyodideAndPackages() {
+            // Load Pyodide with the correct indexURL
+            let pyodide = await loadPyodide({
+                indexURL: "https://cdn.jsdelivr.net/pyodide/v0.18.1/full/"
+            });
+            // Load micropip
+            await pyodide.loadPackage('micropip');
+            return pyodide;
+        }
+
+        async function runPythonCode() {
+            let outputElement = document.getElementById("output");
+            let pythonCode = document.getElementById("python-code").value;
+
+            outputElement.textContent = "Running...";
+
+            let pyodide = await loadPyodideAndPackages();
+
+            try {
+                await pyodide.runPythonAsync(pythonCode);
+                outputElement.textContent = "Code executed successfully.";
+            } catch (err) {
+                outputElement.textContent = err;
+            }
+        }
+    </script>
+</body>
+</html>
