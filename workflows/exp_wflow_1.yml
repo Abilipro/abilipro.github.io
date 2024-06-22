@@ -22,7 +22,7 @@ jobs:
         GITHUB_TOKEN: ${{ secrets.GH_PAT }}
       run: |
         python generate_page.py
-        sed -i "s/GITHUB_TOKEN_PLACEHOLDER/${GITHUB_TOKEN}/" exp_actions_1.html
+        sed -i "s/GITHUB_TOKEN_PLACEHOLDER/${{ secrets.GH_PAT }}/" exp_actions_1.html
 
     - name: Commit and Push changes
       run: |
