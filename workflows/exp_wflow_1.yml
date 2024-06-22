@@ -3,6 +3,7 @@ name: Run Python Script and Update GitHub Pages
 on:
   repository_dispatch:
     types: [run-action]  # Custom event type
+  workflow_dispatch:  # New trigger for manual triggering
 
 jobs:
   build:
