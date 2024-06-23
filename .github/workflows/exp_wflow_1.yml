@@ -1,6 +1,7 @@
 name: Run Python Script and Update GitHub Pages
 
 on:
+  workflow_dispatch:  # This allows manual triggering of the workflow
   repository_dispatch:
     types: [run-action]  # Custom event type
 
