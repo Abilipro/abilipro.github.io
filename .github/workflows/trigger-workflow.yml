@@ -1,0 +1,19 @@
+name: Triggered Workflow
+
+on:
+  workflow_dispatch: {}  # Allows manual triggering from the UI
+  repository_dispatch:
+    types: [trigger-event]  # Custom event type for webpage triggering
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Print message
+      run: |
+        echo "This workflow was triggered!"  # Replace with your desired output
+
+    # Add your desired workflow steps here (e.g., build, deploy, etc.)
