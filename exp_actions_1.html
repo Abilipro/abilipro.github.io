@@ -11,28 +11,15 @@
 
     <script>
         document.getElementById("trigger-workflow-button").addEventListener("click", function(){
-            const token = 'YOUR_PERSONAL_ACCESS_TOKEN'; // Replace with your PAT
-
-            fetch('https://api.github.com/repos/Abilipro/abilipro.github.io/dispatches', {
-                method: 'POST',
-                headers: {
-                    'Accept': 'application/vnd.github.everest-preview+json',
-                    'Authorization': `Bearer ${token}`,
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({
-                    event_type: 'run-action' // Custom event type defined in your workflow
-                })
-            }).then(response => {
-                if(response.ok) {
-                    alert("Workflow triggered successfully!");
-                } else {
-                    alert("Failed to trigger workflow.");
-                }
-            }).catch(error => {
+            fetch('/trigger-workflow', {
+                method: 'POST'
+            }).then(response => response.text())
+              .then(responseText => {
+                alert(responseText);
+              }).catch(error => {
                 console.error('Error:', error);
-                alert("Error triggering workflow.");
-            });
+                alert("Error triggering workflow: " + error);
+              });
         });
     </script>
 </body>
