@@ -1,10 +1,9 @@
 name: Run Python Script
 
 on:
-  push:
-    branches:
-      - main  # Run this workflow when pushing to the main branch
   workflow_dispatch:  # Allows manual triggering of the workflow
+  repository_dispatch:  # Allows triggering via the GitHub API
+    types: [run-action]
 
 jobs:
   run-python:
@@ -21,3 +20,6 @@ jobs:
 
     - name: Run script
       run: python script.py
+
+    - name: List directory contents
+      run: ls -l
