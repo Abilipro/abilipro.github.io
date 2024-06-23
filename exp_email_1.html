@@ -4,7 +4,12 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Send Email Notification</title>
-  <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@v3/dist/emailjs.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@v3/dist/email.min.js"></script>
+  <script type="text/javascript">
+    (function() {
+        emailjs.init("JNpaw_a3ZpyA3z7ic"); // Replace 'YOUR_USER_ID' with your actual EmailJS user ID
+    })();
+  </script>
 </head>
 <body>
   <h1>Send Email</h1>
@@ -31,14 +36,14 @@
       const message = document.getElementById('message').value;
 
       // Prepare data for EmailJS
-      const data = {
+      const templateParams = {
         from_name: name,
         reply_to: email,
         message: message,
       };
 
-      // Send email with EmailJS (replace with your service ID and user ID)
-      emailjs.send('service_a8j9tnd', 'template_qyshqn1', data)
+      // Send email with EmailJS
+      emailjs.send('service_a8j9tnd', 'template_qyshqn1', templateParams)
       .then(() => {
         alert('Email notification sent!');
       }, (error) => {
