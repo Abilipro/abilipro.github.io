@@ -30,9 +30,12 @@ jobs:
         cat exp_actions_1.html
 
     - name: Commit and Push changes
+      env:
+        GH_PAT: ${{ secrets.GH_PAT }}
       run: |
         git config --global user.name 'Abilipro'
         git config --global user.email 'abilipro@outlook.com'
+        git remote set-url origin https://github-actions:${GH_PAT}@github.com/${{ github.repository }}
         git add exp_actions_1.html
         git commit -m "Update exp_actions_1.html with new content"
-        git push
+        git push origin main
