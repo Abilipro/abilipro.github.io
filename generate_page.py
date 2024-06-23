@@ -1,7 +1,7 @@
 # generate_page.py
 import datetime
 
-content = f"""
+content = """
 <!DOCTYPE html>
 <html lang="en">
 <head>
