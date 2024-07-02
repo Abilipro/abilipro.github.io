@@ -52,28 +52,22 @@
         const inputData = document.getElementById('inputData').value;
 
         let pyodide = await loadPyodide();
-        console.log(pyodide.runPython(`
-            import sys
-            sys.version
-        `));
-        pyodide.runPython("print(4 + 5)");
         await pyodide.loadPackage("micropip");
         const micropip = pyodide.pyimport("micropip");
         await micropip.install('ibdp_classes')
-        console.log(54321)
         pyodide.globals.set("pseudoCode", pseudoCode);
         pyodide.globals.set("inputData", inputData);
         
         pyodide.runPython(`
             import ibdp_classes as ib
-            import io
+            from io import StringIO
             import sys
 
             code = globals()["pseudoCode"];
             input_str = globals()["inputData"];
 
             orig_stdin = sys.stdin
-            sys.stdin = io.StringIO(input_str)
+            sys.stdin = StringIO(input_str)
             output_str = str(ib.Pseudocode(code)())
             sys.stdin = orig_stdin
 
