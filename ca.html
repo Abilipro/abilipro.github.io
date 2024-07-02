@@ -40,7 +40,7 @@
                 </div>
             </div>
             <div class="output-section">
-                <h2>Output Section</h2>
+                <h2>Output</h2>
                 <pre id="output"></pre>
             </div>
         </div>
@@ -157,6 +157,7 @@ end loop
 // send an eMail to the author at Dave_Mulkey@fis.edu
 // ==============================================`;
                 
+                document.getElementById('output').innerText = '';
                 document.getElementById('inputData').value = ``;
         
                 break;
@@ -178,6 +179,7 @@ loop C from 1 to B
     end if
 end loop`;
 
+                document.getElementById('output').innerText = '';
                 document.getElementById('inputData').value = ``;
         
                 break;
@@ -200,6 +202,7 @@ loop C from 0 to 10
    output X , " , " , Y    
 end loop`;
 
+                document.getElementById('output').innerText = '';
                 document.getElementById('inputData').value = ``;
         
                 break;
@@ -243,6 +246,7 @@ if DOLLARS = 100 then
    output "BINGO"
 end if `;
 
+                document.getElementById('output').innerText = '';
                 document.getElementById('inputData').value = ``;
         
                 break;
@@ -274,6 +278,7 @@ output "One more problem = " , 0.1+0.1+0.1+0.1+0.1+0.1+0.1+0.1
 
 output "And another problem = " , 3.2 - 0.3`;
 
+                document.getElementById('output').innerText = '';
                 document.getElementById('inputData').value = ``;
         
                 break;
@@ -285,6 +290,7 @@ input M
 
 output "The number in the input area is", M`;
 
+                document.getElementById('output').innerText = '';
                 document.getElementById('inputData').value = `15`;
         
                 break;
