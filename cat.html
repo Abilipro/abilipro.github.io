@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IBCS Pseudocode Runner</title>
+    <link href="styles.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/pyodide/v0.26.1/full/pyodide.js"></script>
+    <script src="loadSamples.js"></script>
+</head>
+<body>
+    <nav>
+        <ul>
+            <li><a href="#home">Home</a></li>
+            <li><a href="#about">About</a></li>
+            <li><a href="#services">Services</a></li>
+            <li><a href="#contact">Contact</a></li>
+        </ul>
+    </nav>
+    <h1>IBCS Pseudocode Runner</h1>
+    <div class="align-container">
+        <div id="SamplesList">
+            <div class="sample-list-container">
+                <h2>Sample List</h2>
+                <select id="sampleSelect">
+                    <!-- Options will be added dynamically -->
+                </select>
+            </div>
+        </div>
+        <div class="container">
+            <div class="input-section">
+                <h2>Pseudocode</h2>
+                <textarea id="pseudoCode" rows="10" placeholder="Enter your code here..."></textarea>
+                <br>
+                <textarea id="inputData" rows="2" placeholder="Enter your input data here..."></textarea>
+                <br>
+                <div class="button-container aligned-buttons">
+                    <button id="runButton">Run Pseudocode</button>
+                    <button id="clearButton">Clear Output</button>
+                </div>
+            </div>
+            <div class="output-section">
+                <h2>Output Section</h2>
+                <pre id="output"></pre>
+            </div>
+        </div>
+    </div>
+    
+    <script type="text/javascript">
+      async function runCode(){
+        const pseudoCode = document.getElementById('pseudoCode').value;
+        const inputData = document.getElementById('inputData').value;
+
+        let pyodide = await loadPyodide();
+        console.log(pyodide.runPython(`
+            import sys
+            sys.version
+        `));
+        pyodide.runPython("print(4 + 5)");
+        await pyodide.loadPackage("micropip");
+        const micropip = pyodide.pyimport("micropip");
+        await micropip.install('snowballstemmer');
+        console.log(12345);
+        pyodide.runPython(`
+            import snowballstemmer
+            stemmer = snowballstemmer.stemmer('english')
+            print(stemmer.stemWords('go goes going gone'.split()))
+        `);
+        await micropip.install('ibdp_classes')
+        console.log(54321)
+        pyodide.globals.set("pseudoCode", pseudoCode);
+        pyodide.globals.set("inputData", inputData);
+        
+        pyodide.runPython(`
+            import ibdp_classes as ib
+            import io
+            import sys
+
+            code = globals()["pseudoCode"];
+            input_str = globals()["inputData"];
+
+            orig_stdin = sys.stdin
+            sys.stdin = io.StringIO(input_str)
+            output_str = str(ib.Pseudocode(code)())
+            sys.stdin = orig_stdin
+
+            print(output_str)
+        `);
+        let capturedOutput = pyodide.globals.get('captured_output');
+        let capturedError = pyodide.globals.get('captured_error');
+        let outputStr = pyodide.globals.get('output_str');
+        console.log(capturedOutput);
+        console.log(capturedError);
+        console.log(outputStr);
+
+        document.getElementById('output').innerText = outputStr;
+      }
+
+      document.getElementById('runButton').addEventListener('click', runCode);
+      document.getElementById('clearButton').addEventListener('click', () => {
+        document.getElementById('output').innerText = '';
+      });
+
+      document.addEventListener('DOMContentLoaded', (event) => {
+        addOptionsToSelect();
+      });
+    </script>
+</body>
+</html>
