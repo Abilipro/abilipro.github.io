@@ -61,15 +61,16 @@
         pyodide.runPython(`
             import ibdp_classes as ib
             from io import StringIO
-            from sys import stdin
+            from sys import stdin as orig_stdin
 
             code = globals()["pseudoCode"];
             input_str = globals()["inputData"];
 
-            orig_stdin = stdin
-            stdin = StringIO(input_str)
+            # orig_stdin = my_input
+            # my_input = StringIO(input_str)
+            globals()['sys'].stdin = StringIO(input_str)
             output_str = str(ib.Pseudocode(code)())
-            stdin = orig_stdin
+            # my_input = orig_stdin
 
             print(output_str)
         `);
