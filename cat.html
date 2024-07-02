@@ -110,8 +110,8 @@
     { value: 'codeCalculations', text: 'Calculations' },
     { value: 'codeMoneyDecisions', text: 'Money' },
     { value: 'codeCommonFactors', text: 'Common Factors'},
-    { value: 'codeMathxyValues', text: 'Math xy Values'}
-    { value: 'inputData', text: 'Input and Echo'}
+    { value: 'codeMathxyValues', text: 'Math xy Values'},
+    { value: 'inputAndEcho', text: 'Input and Echo'}
 
 ];
 
@@ -268,14 +268,15 @@ output "One more problem = " , 0.1+0.1+0.1+0.1+0.1+0.1+0.1+0.1
 output "And another problem = " , 3.2 - 0.3`;
                 break;
 
-            case 'inputData':
-                document.getElementById('pseudoCode').value = `output "=== Input Data ==="
+            case 'inputAndEcho':
+                document.getElementById('pseudoCode').value = `output "=== Input and Echo ==="
+
+output "Enter a number in the input area"
 
 input M
 
-output "The number you entered is:"
+output "The number you entered is ", M`;
 
-output M
                 break;
         
         }
