@@ -30,7 +30,7 @@
         <div class="container">
             <div class="input-section">
                 <h2>Pseudocode</h2>
-                <textarea id="pseudoCode" rows="10" placeholder="Enter your code here, or select a program from the drop list above"></textarea>
+                <textarea id="pseudoCode" rows="10" placeholder="Enter your code here, or select a sample program"></textarea>
                 <br>
                 <textarea id="inputData" rows="2" placeholder="If your program uses input data, enter your input data here"></textarea>
                 <br>
@@ -111,6 +111,7 @@
     { value: 'codeMoneyDecisions', text: 'Money' },
     { value: 'codeCommonFactors', text: 'Common Factors'},
     { value: 'codeMathxyValues', text: 'Math xy Values'}
+    { value: 'inputData', text: 'Input and Echo'}
 
 ];
 
@@ -266,6 +267,17 @@ output "One more problem = " , 0.1+0.1+0.1+0.1+0.1+0.1+0.1+0.1
 
 output "And another problem = " , 3.2 - 0.3`;
                 break;
+
+            case 'inputData':
+                document.getElementById('pseudoCode').value = `output "=== Input Data ==="
+
+input M
+
+output "The number you entered is:"
+
+output M
+                break;
+        
         }
     });
 }
