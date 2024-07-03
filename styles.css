@@ -9,6 +9,7 @@ body {
     align-items: center;
     height: 100vh;
     flex-direction: column;
+    overflow-x: hidden; /* Prevent horizontal scroll */
 }
 
 nav {
@@ -78,6 +79,7 @@ h1 {
     padding: 20px;
     box-sizing: border-box; /* Ensure padding is included in the width */
     position: relative; /* Needed for pseudo-elements */
+    overflow-x: hidden; /* Prevent horizontal scroll */
 }
 
 .input-section, .output-section {
