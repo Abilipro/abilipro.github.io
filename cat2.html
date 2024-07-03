@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>IBCS Pseudocode Runner</title>
+    <title>IB-style Pseudocode Runner</title>
     <link href="./styles.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/pyodide/v0.26.1/full/pyodide.js"></script>
     <script src="loadSamples.js"></script>
@@ -17,7 +17,7 @@
             <li><a href="#contact">Contact</a></li>
         </ul>
     </nav>
-    <h1>IBCS Pseudocode Runner</h1>
+    <h1>IB-style Pseudocode Runner</h1>
     <div class="align-container">
         <div id="SamplesList">
             <div class="sample-list-container">
@@ -30,9 +30,9 @@
         <div class="container">
             <div class="input-section resizable">
                 <h2>Pseudocode</h2>
-                <textarea id="pseudoCode" rows="10" placeholder="Enter your code here..."></textarea>
+                <textarea id="pseudoCode" rows="10" placeholder="Enter the code to run here\nor select a program to edit and run"></textarea>
                 <br>
-                <textarea id="inputData" rows="2" placeholder="Enter your input data here..."></textarea>
+                <textarea id="inputData" rows="2" placeholder="If your program takes input, enter input data here"></textarea>
                 <br>
                 <div class="button-container aligned-buttons">
                     <button id="runButton">Run Pseudocode</button>
@@ -40,7 +40,7 @@
                 </div>
             </div>
             <div class="output-section">
-                <h2>Output Section</h2>
+                <h2>Output</h2>
                 <pre id="output"></pre>
             </div>
         </div>
@@ -135,6 +135,81 @@ function populateSamplesList() {
         
         switch (selectedSample) {
 
+            case 'codeHello':
+                document.getElementById('pseudoCode').value = `output "Hello, world!"`;
+                
+                document.getElementById('output').innerText = '';
+                document.getElementById('inputData').value = `15`;
+        
+                break;
+
+
+            case 'codeVariable':
+                document.getElementById('pseudoCode').value = `// Variable declaration and assignment
+MYSTRING = "Hello, IB Pseudocode!"
+
+// Output the variable
+output MYSTRING
+`;
+
+                document.getElementById('output').innerText = '';
+                document.getElementById('inputData').value = `15`;
+        
+                break;
+
+	    case 'codeIfThen':
+                document.getElementById('pseudoCode').value = `// Conditional statement
+NUMBER = 10
+
+if NUMBER > 5 then
+    output "Number is greater than 5"
+else
+    output "Number is not greater than 5"
+end if`;
+
+                document.getElementById('output').innerText = '';
+                document.getElementById('inputData').value = `15`;
+        
+                break;
+
+
+            case 'codeWhileLoop':
+                document.getElementById('pseudoCode').value = `// While loop
+COUNTER = 1
+loop while COUNTER <= 5 
+    output "Counter: ", COUNTER
+    COUNTER = COUNTER + 1
+end loop
+
+// For loop
+loop COUNTER from 1 to 5
+    output "Iteration: ", COUNTER
+end loop`;
+
+                document.getElementById('output').innerText = '';
+                document.getElementById('inputData').value = `15`;
+        
+                break;
+
+
+
+            case 'codeFunction':
+                document.getElementById('pseudoCode').value = `// Function declaration and call
+function ADD_NUMBERS(A , B) 
+    RESULT = 0
+    RESULT = A + B
+    return RESULT
+end function
+
+// Call the function
+SUM = 0
+SUM = ADD_NUMBERS(5, 3)
+output "The sum is: " , SUM`;
+
+                document.getElementById('output').innerText = '';
+                document.getElementById('inputData').value = `15`;
+        
+                break;
 
             case 'inputAndEcho':
                 document.getElementById('pseudoCode').value = `output "=== Input and Echo ==="
