@@ -1,6 +1,6 @@
 body {
     font-family: 'Roboto', sans-serif;
-    background-color: #f0f0f0;
+    background-color: #d6f5d6; /* Light green background */
     color: #333;
     margin: 0;
     padding: 0;
@@ -13,7 +13,8 @@ body {
 
 nav {
     width: 100%;
-    background-color: #333;
+    background-color: #006633; /* Dark green */
+    color: #fff; /* White text */
     padding: 10px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     margin-bottom: 20px;
@@ -32,7 +33,7 @@ nav ul li {
 }
 
 nav ul li a {
-    color: white;
+    color: #fff; /* White text */
     text-decoration: none;
     font-weight: bold;
 }
@@ -46,30 +47,72 @@ h1 {
 }
 
 .align-container {
+    width: 90%; /* Adjusted width for wider sections */
+    max-width: 1200px; /* Limit maximum width for better appearance */
     display: flex;
     flex-direction: column;
-    align-items: flex-start;
-    width: 80%;
-    max-width: 1200px;
+    align-items: center;
+}
+
+#SamplesList {
+    width: 100%; /* Adjusted width to 100% */
+    margin-bottom: 20px;
+    border: 1px solid #ccc; /* Box border around samplesOptions */
+    border-radius: 5px;
+    padding: 10px;
+    display: flex; /* Flexbox container */
+    justify-content: center; /* Center content horizontally */
+    align-items: center; /* Center content vertically */
 }
 
 .container {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    width: 100%;
-    background-color: white;
-    border: 1px solid #ccc;
+    display: flex;
+    gap: 10px; /* Fixed typo: replaced '10pcx' with '10px' */
+    width: 100%; /* Adjusted width for wider sections */
+    background-color: azure; /* Corrected background color syntax */
+    border: 2px solid #ccc; /* Light gray border */
     border-radius: 5px;
+    border-style: groove;
+    border-width: thick;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     padding: 20px;
+    box-sizing: border-box; /* Ensure padding is included in the width */
+    position: relative; /* Needed for pseudo-elements */
 }
 
 .input-section, .output-section {
+    flex: 1; /* Allow sections to take equal space */
     padding: 20px;
+    min-width: 0; /* Prevent overflow issues */
+    box-sizing: border-box; /* Include padding in the width */
 }
 
 .input-section {
-    border-right: 1px solid #ccc;
+    border-right: 3px solid #ccc;
+    background-color: #d6f5d6; /* Light gray-green background */
+    position: relative; /* Needed for pseudo-element */
+}
+
+.output-section {
+    border-left: 3px solid #ccc;
+}
+
+.input-section:before {
+    content: '';
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    right: -5px; /* Adjust position */
+    width: 10px; /* Width of the resizable handle */
+    cursor: ew-resize; /* Cursor style for resize */
+    background: linear-gradient(to right, rgba(0,0,0,0) 0%, rgba(0,0,0,0.2) 50%, rgba(0,0,0,0) 100%); /* Gradient for handle */
+    z-index: 1; /* Ensure it's above content */
+}
+
+.input-section.resizable {
+    resize: horizontal; /* Enable horizontal resizing */
+    overflow: auto; /* Allow content to scroll */
+    min-width: 100px; /* Minimum width to prevent collapse */
 }
 
 textarea {
@@ -97,8 +140,8 @@ textarea {
 }
 
 button {
-    background-color: #888;
-    color: white;
+    background-color: #ffb81c; /* George Mason Gold */
+    color: #fff; /* White text */
     border: none;
     border-radius: 5px;
     padding: 10px 20px;
@@ -108,47 +151,4 @@ button {
 }
 
 button:hover {
-    background-color: #666;
-}
-
-pre {
-    background-color: #e0e0e0;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    padding: 10px;
-    overflow-x: auto;
-    white-space: pre-wrap;
-    word-wrap: break-word;
-    resize: both;
-    box-sizing: border-box;
-    min-height: 190px;
-}
-
-#SamplesList {
-    width: 100%;
-    margin-bottom: 20px;
-}
-
-#SamplesList h2 {
-    margin-top: 0;
-}
-
-select {
-    padding: 10px;
-    font-size: 16px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    margin-left: 10px;
-}
-
-.aligned-buttons {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-}
-
-.sample-list-container {
-    display: flex;
-    align-items: center;
-    margin-bottom: 10px;
-}
+    background-color: #e6a800; /* Dark
