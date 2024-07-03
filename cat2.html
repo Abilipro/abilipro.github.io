@@ -99,10 +99,10 @@ async function runCode(){
 
         const sampleOptions = [
     { value: 'inviteLine', text: 'Select a sample' },
-    { value: 'codeHello', text: 'Output' },
+    { value: 'codeHello', text: 'Output Instruction' },
     { value: 'codeVariable', text: 'Variables' },
     { value: 'codeIfThen', text: 'If-Then' },
-    { value: 'codeWhileLoop', text: 'While and Loop'},
+    { value: 'codeWhileLoop', text: 'While Loop'},
     { value: 'codeFunction', text: 'Function'},
     { value: 'inputAndEcho', text: 'Input'}
 
@@ -139,7 +139,7 @@ function populateSamplesList() {
                 document.getElementById('pseudoCode').value = `output "Hello, world!"`;
                 
                 document.getElementById('output').innerText = '';
-                document.getElementById('inputData').value = `15`;
+                document.getElementById('inputData').value = ``;
         
                 break;
 
@@ -153,7 +153,7 @@ output MYSTRING
 `;
 
                 document.getElementById('output').innerText = '';
-                document.getElementById('inputData').value = `15`;
+                document.getElementById('inputData').value = ``;
         
                 break;
 
@@ -168,7 +168,7 @@ else
 end if`;
 
                 document.getElementById('output').innerText = '';
-                document.getElementById('inputData').value = `15`;
+                document.getElementById('inputData').value = ``;
         
                 break;
 
@@ -187,7 +187,7 @@ loop COUNTER from 1 to 5
 end loop`;
 
                 document.getElementById('output').innerText = '';
-                document.getElementById('inputData').value = `15`;
+                document.getElementById('inputData').value = ``;
         
                 break;
 
@@ -207,7 +207,7 @@ SUM = ADD_NUMBERS(5, 3)
 output "The sum is: " , SUM`;
 
                 document.getElementById('output').innerText = '';
-                document.getElementById('inputData').value = `15`;
+                document.getElementById('inputData').value = ``;
         
                 break;
 
