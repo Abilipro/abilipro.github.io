@@ -99,7 +99,7 @@ h1 {
 }
 
 .input-section {
-    border-right: 0px solid #ccc;
+    border-right: 3px solid #ccc;
     background-color: #d6f5d6; /* Light gray-green background */
     position: relative; /* Needed for pseudo-element */
 }
