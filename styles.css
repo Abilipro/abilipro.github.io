@@ -92,14 +92,14 @@ h1 {
 
 .input-section, .output-section {
     flex: 1; /* Allow sections to take equal space */
-    padding: 20px;
+    padding: 0px;
     min-width: 0; /* Prevent overflow issues */
     box-sizing: border-box; /* Include padding in the width */
     margin: 0; /* Removed margin */
 }
 
 .input-section {
-    border-right: 3px solid #ccc;
+    border-right: 0px solid #ccc;
     background-color: #d6f5d6; /* Light gray-green background */
     position: relative; /* Needed for pseudo-element */
 }
