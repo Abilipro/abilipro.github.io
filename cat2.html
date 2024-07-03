@@ -99,12 +99,12 @@ async function runCode(){
 
         const sampleOptions = [
     { value: 'inviteLine', text: 'Select a sample' },
-    { value: 'codeIntro', text: 'Introduction' },
-    { value: 'codeCalculations', text: 'Calculations' },
-    { value: 'codeMoneyDecisions', text: 'Money' },
-    { value: 'codeCommonFactors', text: 'Common Factors'},
-    { value: 'codeMathxyValues', text: 'Math xy Values'},
-    { value: 'inputAndEcho', text: 'Input and Echo'}
+    { value: 'codeHello', text: 'Output' },
+    { value: 'codeVariable', text: 'Variables' },
+    { value: 'codeIfThen', text: 'If-Then' },
+    { value: 'codeWhileLoop', text: 'While and Loop'},
+    { value: 'codeFunction', text: 'Function'}
+    { value: 'inputAndEcho', text: 'Input'}
 
 ];
 
@@ -134,155 +134,84 @@ function populateSamplesList() {
         const selectedSample = event.target.value;
         
         switch (selectedSample) {
-            case 'codeIntro':
-                document.getElementById('pseudoCode').value = `output "Welcome"
-loop COUNT from 1 to 5
-  output COUNT
-end loop
 
-// === EZ Pcode =================================
-//
-// This tool is intended to help teachers prepare
-// Pseudocode that is consistent with the new
-// IB Computer Science standards for the 2014 syllabus.
-// This tool is a "quick and dirty hack" that
-// translates Pcode into equivalent JavaScript.
-// This is done with simple search and replace commands,
-// so it is not very sophisticated and it's relatively
-// easy to write code that won't run properly.
-// One warning - the keyword NOT should never be used
-// as part of a variable name, e.g. NOTHING would be
-// a bad variable name, as it will translate to !HING.
-// Suggestions for improvement are welcome -
-// send an eMail to the author at Dave_Mulkey@fis.edu
-// ==============================================`;
+            case 'codeHello':
+                document.getElementById('pseudoCode').value = `output "Hello, world!"`;
                 
                 document.getElementById('output').innerText = '';
-                document.getElementById('inputData').value = ``;
+                document.getElementById('inputData').value = `15`;
         
                 break;
 
-            case 'codeCommonFactors':
-                document.getElementById('pseudoCode').value = `//==== Common Factors ===============================
-// This program prints all the common factors of A and B.
-// This would be useful for reducing fractions.
-// ==================================================
 
-A = 28
-B = 42
+            case 'codeVariable':
+                document.getElementById('pseudoCode').value = `// Variable declaration and assignment
+MYSTRING = "Hello, IB Pseudocode!"
 
-output "Common factors of " , A , " and " , B
+// Output the variable
+output MYSTRING
+`;
 
-loop C from 1 to B
-    if (A mod C = 0) AND (B mod C = 0) then
-       output C
-    end if
+                document.getElementById('output').innerText = '';
+                document.getElementById('inputData').value = `15`;
+        
+                break;
+
+	    case 'codeIfThen':
+                document.getElementById('pseudoCode').value = `// Conditional statement
+NUMBER = 10
+
+if NUMBER > 5 then
+    output "Number is greater than 5"
+else
+    output "Number is not greater than 5"
+end if`;
+
+                document.getElementById('output').innerText = '';
+                document.getElementById('inputData').value = `15`;
+        
+                break;
+
+
+            case 'codeWhileLoop':
+                document.getElementById('pseudoCode').value = `// While loop
+COUNTER = 1
+loop while COUNTER <= 5 
+    output "Counter: ", COUNTER
+    COUNTER = COUNTER + 1
+end loop
+
+// For loop
+loop COUNTER from 1 to 5
+    output "Iteration: ", COUNTER
 end loop`;
 
                 document.getElementById('output').innerText = '';
-                document.getElementById('inputData').value = ``;
+                document.getElementById('inputData').value = `15`;
         
                 break;
 
-            case'codeMathxyValues':
-                document.getElementById('pseudoCode').value = `// === Table of Values for Math Function ===
-// This program uses a simple loop to produce a table
-// of x,y values for a math function.
-// Notice that the LOOP FOR command can only count by 1,
-// so the program divides by 2 to count by 0.5 each time.
-// Dividing by 2 only works if you divide by 2.0,
-// because C / 2 would do integer division, ignoring
-// the fractional result.
 
-output "X , Y"
 
-loop C from 0 to 10
-   X = C / 2.0
-   Y = 3*X*X - 7*X + 2
-   output X , " , " , Y    
-end loop`;
+            case 'codeFunction':
+                document.getElementById('pseudoCode').value = `// Function declaration and call
+function ADD_NUMBERS(A , B) 
+    RESULT = 0
+    RESULT = A + B
+    return RESULT
+end function
+
+// Call the function
+SUM = 0
+SUM = ADD_NUMBERS(5, 3)
+output "The sum is: " , SUM`;
 
                 document.getElementById('output').innerText = '';
-                document.getElementById('inputData').value = ``;
+                document.getElementById('inputData').value = `15`;
         
                 break;
 
-
-
-
-            case 'codeMoneyDecisions':
-                document.getElementById('pseudoCode').value = `// === Money ====================================
-//
-// This program converts money from EUROS into
-// several other currencies. Then it uses IF commands
-// to make some decisions.
-// ==============================================
-
-EUROS = 50.00
-
-POUNDS = 0.8*EUROS
-
-DOLLARS = EUROS / 0.75
-
-YEN = EUROS * 90
-
-output EUROS , " EUR"
-
-output YEN , " Yen"
-
-if YEN > 1000 then
-   output "That is a lot of Yen"
-end if
-
-output POUNDS , " BP"
-
-if POUNDS < 100 then
-   output "That is a small number of Pounds"
-end if
-
-output "$" , DOLLARS
-
-if DOLLARS = 100 then
-   output "BINGO"
-end if `;
-
-                document.getElementById('output').innerText = '';
-                document.getElementById('inputData').value = ``;
-        
-                break;
-
-            case 'codeCalculations':
-                document.getElementById('pseudoCode').value = `output "=== Simple Calculations ==="
-
-output "Adding 1...10 = " , 1+2+3+4+5+6+7+8+9+10
-
-output "10 Factorial = " , 1*2*3*4*5*6*7*8*9*10
-
-output "Fractions = 1/2 + 1/4 + 1/5 = " , 1/2 + 1/4 + 1/5
-
-output "Pythagoras = 3^2 + 4^2 = 5^2 = " , 3*3 + 4*4 , " and " , 5*5
-
-output "Big Numbers = one trillion ^ 2 = " , 1000000000000 * 1000000000000
-
-output "Easier big numbers = " , 2e12 * 3e12
-
-output "10307 is not prime = " , 10307 / 11 , " * " , 11
-
-output "15% of 12345 = " , 15/100*12345
-
-output "Incorrect calculation = " , 1234567890 * 1234567890
-
-output "Another error = " , 1/2 + 1/3 + 1/6
-
-output "One more problem = " , 0.1+0.1+0.1+0.1+0.1+0.1+0.1+0.1
-
-output "And another problem = " , 3.2 - 0.3`;
-
-                document.getElementById('output').innerText = '';
-                document.getElementById('inputData').value = ``;
-        
-                break;
-
+                
             case 'inputAndEcho':
                 document.getElementById('pseudoCode').value = `output "=== Input and Echo ==="
 
