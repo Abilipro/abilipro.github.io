@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IB-style Pseudocode Runner</title>
+    <link href="./styles.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/pyodide/v0.26.1/full/pyodide.js"></script>
+    <script src="loadSamples.js"></script>
+</head>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-77SX3Y9K8S"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+  
+    gtag('config', 'G-77SX3Y9K8S');
+  </script>
+<body>
+    <nav>
+        <ul>
+            <li><a href="#home">Home</a></li>
+            <li><a href="#about">About</a></li>
+            <li><a href="#services">Services</a></li>
+            <li><a href="#contact">Contact</a></li>
+        </ul>
+    </nav>
+    <h1>IB-style Pseudocode Runner</h1>
+    <div class="align-container">
+        <div id="SamplesList">
+            <div class="sample-list-container">
+                <span id="sampleListLabel">Sample List</span>
+                <select id="sampleSelect">
+                    <!-- Options will be added dynamically -->
+                </select>
+            </div>
+        </div>
+        <div class="container">
+            <div class="input-section resizable">
+                <h2>Pseudocode</h2>
+                <textarea id="pseudoCode" rows="10" placeholder="Enter the code to run here, or select a program"></textarea>
+                <br>
+                <textarea id="inputData" rows="2" placeholder="If your program takes input, enter input data here"></textarea>
+                <br>
+                <div class="button-container aligned-buttons">
+                    <button id="runButton">Run Pseudocode</button>
+                    <button id="clearButton">Clear Output</button>
+                </div>
+            </div>
+            <div class="output-section">
+                <h2>Output</h2>
+                <pre id="output"></pre>
+            </div>
+        </div>
+    </div>
+    
+    <script type="text/javascript">
+
+let pyodideReadyPromise = (async () => {
+    let pyodide = await loadPyodide();
+    await pyodide.loadPackage("micropip");
+    const micropip = pyodide.pyimport("micropip");
+    await micropip.install('ibdp_classes');
+    
+    pyodide.runPython(`
+        import ibdp_classes as ib
+        import io
+        import sys
+    `);
+
+    return pyodide;
+})();
+
+async function runCode(){
+    const pseudoCode = document.getElementById('pseudoCode').value;
+    const inputData = document.getElementById('inputData').value;
+
+    let pyodide = await pyodideReadyPromise;
+
+    pyodide.globals.set("pseudoCode", pseudoCode);
+    pyodide.globals.set("inputData", inputData);
+    
+    pyodide.runPython(`
+        code = globals()["pseudoCode"];
+        input_str = globals()["inputData"];
+
+        orig_stdin = sys.stdin
+        sys.stdin = io.StringIO(input_str)
+        output_str = str(ib.Pseudocode(code)())
+        sys.stdin = orig_stdin
+
+        print(output_str)
+    `);
+    
+    let outputStr = pyodide.globals.get('output_str');
+    document.getElementById('output').innerText = outputStr;
+}
+
+      document.getElementById('runButton').addEventListener('click', runCode);
+      document.getElementById('clearButton').addEventListener('click', () => {
+        document.getElementById('output').innerText = '';
+      });
+
+      document.addEventListener('DOMContentLoaded', (event) => {
+        addOptionsToSelect();
+      });
+
+        const sampleOptions = [
+    { value: 'inviteLine', text: 'Select a sample' },
+    { value: 'codeHello', text: 'Output Instruction' },
+    { value: 'codeVariable', text: 'Variables' },
+    { value: 'codeIfThen', text: 'If-Then' },
+    { value: 'codeWhileLoop', text: 'While Loop'},
+    { value: 'codeFunction', text: 'Function'},
+    { value: 'inputAndEcho', text: 'Input Instruction'}
+
+];
+
+function addOptionsToSelect() {
+    const sampleSelect = document.getElementById('sampleSelect');
+
+    // Clear any existing options to avoid duplicates
+    sampleSelect.innerHTML = '';
+
+    sampleOptions.forEach(option => {
+        // Check if the option already exists
+        if (!Array.from(sampleSelect.options).some(opt => opt.value === option.value)) {
+            const opt = document.createElement('option');
+            opt.value = option.value;
+            opt.textContent = option.text;
+            sampleSelect.appendChild(opt);
+        }
+    });
+
+    // Call this function here to set up the event listener after adding options
+    populateSamplesList();
+}
+
+function populateSamplesList() {
+    const sampleSelect = document.getElementById('sampleSelect');
+    sampleSelect.addEventListener('change', (event) => {
+        const selectedSample = event.target.value;
+        
+        switch (selectedSample) {
+
+            case 'codeHello':
+                document.getElementById('pseudoCode').value = `output "Hello, world!"`;
+                
+                document.getElementById('output').innerText = '';
+                document.getElementById('inputData').value = ``;
+        
+                break;
+
+
+            case 'codeVariable':
+                document.getElementById('pseudoCode').value = `// Variable declaration and assignment
+MYSTRING = "Hello, IB Pseudocode!"
+
+// Output the variable
+output MYSTRING
+`;
+
+                document.getElementById('output').innerText = '';
+                document.getElementById('inputData').value = ``;
+        
+                break;
+
+	    case 'codeIfThen':
+                document.getElementById('pseudoCode').value = `// Conditional statement
+NUMBER = 10
+
+if NUMBER > 5 then
+    output "Number is greater than 5"
+else
+    output "Number is not greater than 5"
+end if`;
+
+                document.getElementById('output').innerText = '';
+                document.getElementById('inputData').value = ``;
+        
+                break;
+
+
+            case 'codeWhileLoop':
+                document.getElementById('pseudoCode').value = `// While loop
+COUNTER = 1
+loop while COUNTER <= 5 
+    output "Counter: ", COUNTER
+    COUNTER = COUNTER + 1
+end loop
+
+// For loop
+loop COUNTER from 1 to 5
+    output "Iteration: ", COUNTER
+end loop`;
+
+                document.getElementById('output').innerText = '';
+                document.getElementById('inputData').value = ``;
+        
+                break;
+
+
+
+            case 'codeFunction':
+                document.getElementById('pseudoCode').value = `// Function declaration and call
+function ADD_NUMBERS(A , B) 
+    RESULT = 0
+    RESULT = A + B
+    return RESULT
+end function
+
+// Call the function
+SUM = 0
+SUM = ADD_NUMBERS(5, 3)
+output "The sum is: " , SUM`;
+
+                document.getElementById('output').innerText = '';
+                document.getElementById('inputData').value = ``;
+        
+                break;
+
+            case 'inputAndEcho':
+                document.getElementById('pseudoCode').value = `output "=== Input and Echo ==="
+
+input M
+
+output "The number in the input area is", M`;
+
+                document.getElementById('output').innerText = '';
+                document.getElementById('inputData').value = `15`;
+        
+                break;
+
+        }
+    });
+}
+
+    </script>
+</body>
+</html>
