@@ -87,7 +87,9 @@ async function runCode(){
 
         orig_stdin = sys.stdin
         sys.stdin = io.StringIO(input_str)
-        output_str = str(ib.Pseudocode(code)())
+        exit_code = exec("ib.Pseudocode(code)()")
+        output_str = exit_code + "\n" + str(ib.Pseudocode(code)())
+        
         sys.stdin = orig_stdin
 
         print(output_str)
