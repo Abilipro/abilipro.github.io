@@ -89,7 +89,7 @@ async function runCode(){
         sys.stdin = io.StringIO(input_str)
 	try:
 	        output_str = str(ib.Pseudocode(code)())
-	except Exception e:
+	except Exception as e:
  		output_str = "An error occurred:\n" + str(e)
    
         sys.stdin = orig_stdin
