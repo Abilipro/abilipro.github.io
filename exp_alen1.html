@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IBCS Pseudocode Runner</title>
+    <link href="styles.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/pyodide/v0.26.1/full/pyodide.js"></script>
+    <script src="loadSamples.js"></script>
+</head>
+<body>
+    <nav>
+        <ul>
+            <li><a href="#home">Home</a></li>
+            <li><a href="#about">About</a></li>
+            <li><a href="#services">Services</a></li>
+            <li><a href="#contact">Contact</a></li>
+        </ul>
+    </nav>
+    <h1>IBCS Pseudocode Runner</h1>
+    <div class="align-container">
+        <div id="SamplesList">
+            <div class="sample-list-container" style="display: flex; align-items: center;">
+                <h2 style="margin: 0;">Sample Programs</h2>
+                <select id="sampleSelect" style="margin-left: 10px;">
+                    <!-- Options will be added dynamically -->
+                </select>
+            </div>
+        </div>
+        <div class="container">
+            <div class="input-section">
+                <h2>Pseudocode</h2>
+                <textarea id="pseudoCode" rows="10" placeholder="Enter your code here&#10;or select a sample program to edit and run"></textarea>
+                <br>
+                <textarea id="inputData" rows="2" placeholder="If your program uses input data, enter your input data here"></textarea>
+                <br>
+                <div class="button-container aligned-buttons">
+                    <button id="runButton">Run Pseudocode</button>
+                    <button id="clearButton">Clear Output</button>
+                </div>
+            </div>
+            <div class="output-section">
+                <h2>Output</h2>
+                <pre id="output"></pre>
+            </div>
+        </div>
+    </div>
+    
+    <script type="text/javascript">
+
+let pyodideReadyPromise = (async () => {
+    let pyodide = await loadPyodide();
+    await pyodide.loadPackage("micropip");
+    const micropip = pyodide.pyimport("micropip");
+    await micropip.install('ibdp_classes');
+    
+    pyodide.runPython(`
+        import ibdp_classes as ib
+        import io
+        import sys
+    `);
+
+    return pyodide;
+})();
+
+async function runCode(){
+    const pseudoCode = document.getElementById('pseudoCode').value;
+    const inputData = document.getElementById('inputData').value;
+
+    let pyodide = await pyodideReadyPromise;
+
+    pyodide.globals.set("pseudoCode", pseudoCode);
+    pyodide.globals.set("inputData", inputData);
+    
+    pyodide.runPython(`
+        code = globals()["pseudoCode"];
+        input_str = globals()["inputData"];
+
+        orig_stdin = sys.stdin
+        sys.stdin = io.StringIO(input_str)
+        output_str = str(ib.Pseudocode(code)())
+        sys.stdin = orig_stdin
+
+        print(output_str)
+    `);
+    
+    let outputStr = pyodide.globals.get('output_str');
+    document.getElementById('output').innerText = outputStr;
+}
+
+      document.getElementById('runButton').addEventListener('click', runCode);
+      document.getElementById('clearButton').addEventListener('click', () => {
+        document.getElementById('output').innerText = '';
+      });
+
+      document.addEventListener('DOMContentLoaded', (event) => {
+        addOptionsToSelect();
+      });
+
+        const sampleOptions = [
+    { value: 'inviteLine', text: 'Select a sample' },
+    { value: 'codeIntro', text: 'Introduction' },
+    { value: 'codeCalculations', text: 'Calculations' },
+    { value: 'codeMoneyDecisions', text: 'Money' },
+    { value: 'codeCommonFactors', text: 'Common Factors'},
+    { value: 'codeMathxyValues', text: 'Math xy Values'},
+    { value: 'inputAndEcho', text: 'Input and Echo'}
+
+];
+
+function addOptionsToSelect() {
+    const sampleSelect = document.getElementById('sampleSelect');
+
+    // Clear any existing options to avoid duplicates
+    sampleSelect.innerHTML = '';
+
+    sampleOptions.forEach(option => {
+        // Check if the option already exists
+        if (!Array.from(sampleSelect.options).some(opt => opt.value === option.value)) {
+            const opt = document.createElement('option');
+            opt.value = option.value;
+            opt.textContent = option.text;
+            sampleSelect.appendChild(opt);
+        }
+    });
+
+    // Call this function here to set up the event listener after adding options
+    populateSamplesList();
+}
+
+function populateSamplesList() {
+    const sampleSelect = document.getElementById('sampleSelect');
+    sampleSelect.addEventListener('change', (event) => {
+        const selectedSample = event.target.value;
+        
+        switch (selectedSample) {
+            case 'codeIntro':
+                document.getElementById('pseudoCode').value = `output "Welcome"
+loop COUNT from 1 to 5
+  output COUNT
+end loop
+
+// === EZ Pcode =================================
+//
+// This tool is intended to help teachers prepare
+// Pseudocode that is consistent with the new
+// IB Computer Science standards for the 2014 syllabus.
+// This tool is a "quick and dirty hack" that
+// translates Pcode into equivalent JavaScript.
+// This is done with simple search and replace commands,
+// so it is not very sophisticated and it's relatively
+// easy to write code that won't run properly.
+// One warning - the keyword NOT should never be used
+// as part of a variable name, e.g. NOTHING would be
+// a bad variable name, as it will translate to !HING.
+// Suggestions for improvement are welcome -
+// send an eMail to the author at Dave_Mulkey@fis.edu
+// ==============================================`;
+                
+                document.getElementById('output').innerText = '';
+                document.getElementById('inputData').value = ``;
+        
+                break;
+
+            case 'codeCommonFactors':
+                document.getElementById('pseudoCode').value = `//==== Common Factors ===============================
+// This program prints all the common factors of A and B.
+// This would be useful for reducing fractions.
+// ==================================================
+
+A = 28
+B = 42
+
+output "Common factors of " , A , " and " , B
+
+loop C from 1 to B
+    if (A mod C = 0) AND (B mod C = 0) then
+       output C
+    end if
+end loop`;
+
+                document.getElementById('output').innerText = '';
+                document.getElementById('inputData').value = ``;
+        
+                break;
+
+            case'codeMathxyValues':
+                document.getElementById('pseudoCode').value = `// === Table of Values for Math Function ===
+// This program uses a simple loop to produce a table
+// of x,y values for a math function.
+// Notice that the LOOP FOR command can only count by 1,
+// so the program divides by 2 to count by 0.5 each time.
+// Dividing by 2 only works if you divide by 2.0,
+// because C / 2 would do integer division, ignoring
+// the fractional result.
+
+output "X , Y"
+
+loop C from 0 to 10
+   X = C / 2.0
+   Y = 3*X*X - 7*X + 2
+   output X , " , " , Y    
+end loop`;
+
+                document.getElementById('output').innerText = '';
+                document.getElementById('inputData').value = ``;
+        
+                break;
+
+
+
+
+            case 'codeMoneyDecisions':
+                document.getElementById('pseudoCode').value = `// === Money ====================================
+//
+// This program converts money from EUROS into
+// several other currencies. Then it uses IF commands
+// to make some decisions.
+// ==============================================
+
+EUROS = 50.00
+
+POUNDS = 0.8*EUROS
+
+DOLLARS = EUROS / 0.75
+
+YEN = EUROS * 90
+
+output EUROS , " EUR"
+
+output YEN , " Yen"
+
+if YEN > 1000 then
+   output "That is a lot of Yen"
+end if
+
+output POUNDS , " BP"
+
+if POUNDS < 100 then
+   output "That is a small number of Pounds"
+end if
+
+output "$" , DOLLARS
+
+if DOLLARS = 100 then
+   output "BINGO"
+end if `;
+
+                document.getElementById('output').innerText = '';
+                document.getElementById('inputData').value = ``;
+        
+                break;
+
+            case 'codeCalculations':
+                document.getElementById('pseudoCode').value = `output "=== Simple Calculations ==="
+
+output "Adding 1...10 = " , 1+2+3+4+5+6+7+8+9+10
+
+output "10 Factorial = " , 1*2*3*4*5*6*7*8*9*10
+
+output "Fractions = 1/2 + 1/4 + 1/5 = " , 1/2 + 1/4 + 1/5
+
+output "Pythagoras = 3^2 + 4^2 = 5^2 = " , 3*3 + 4*4 , " and " , 5*5
+
+output "Big Numbers = one trillion ^ 2 = " , 1000000000000 * 1000000000000
+
+output "Easier big numbers = " , 2e12 * 3e12
+
+output "10307 is not prime = " , 10307 / 11 , " * " , 11
+
+output "15% of 12345 = " , 15/100*12345
+
+output "Incorrect calculation = " , 1234567890 * 1234567890
+
+output "Another error = " , 1/2 + 1/3 + 1/6
+
+output "One more problem = " , 0.1+0.1+0.1+0.1+0.1+0.1+0.1+0.1
+
+output "And another problem = " , 3.2 - 0.3`;
+
+                document.getElementById('output').innerText = '';
+                document.getElementById('inputData').value = ``;
+        
+                break;
+
+            case 'inputAndEcho':
+                document.getElementById('pseudoCode').value = `output "=== Input and Echo ==="
+
+input M
+
+output "The number in the input area is", M`;
+
+                document.getElementById('output').innerText = '';
+                document.getElementById('inputData').value = `15`;
+        
+                break;
+
+        }
+    });
+}
+
+document.addEventListener('DOMContentLoaded', (event) => {
+    addOptionsToSelect();
+});
+
+    </script>
+</body>
+</html>
