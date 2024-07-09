@@ -6,18 +6,8 @@
     <title>IBCS Pseudocode Runner</title>
     <link href="styles.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/pyodide/v0.26.1/full/pyodide.js"></script>
-    <script src="loadSamples.js"></script>
 </head>
 <body>
-    <nav>
-        <ul>
-            <li><a href="#home">Home</a></li>
-            <li><a href="#about">About to delete</a></li>
-            <li><a href="#services">Services</a></li>
-            <li><a href="#contact">Contact</a></li>
-        </ul>
-    </nav>
-    <h1>IBCS Pseudocode Runner</h1>
     <div class="align-container">
         <div id="SamplesList">
             <div class="sample-list-container">
@@ -50,48 +40,13 @@
       async function runCode(){
         const pseudoCode = document.getElementById('pseudoCode').value;
         const inputData = document.getElementById('inputData').value;
-
-        let pyodide = await loadPyodide();
-        console.log(pyodide.runPython(`
-            import sys
-            sys.version
-        `));
-        pyodide.runPython("print(4 + 5)");
-        await pyodide.loadPackage("micropip");
-        const micropip = pyodide.pyimport("micropip");
-        await micropip.install('ibdp_classes')
-        console.log(54321)
-        pyodide.globals.set("pseudoCode", pseudoCode);
-        pyodide.globals.set("inputData", inputData);
-        
-        pyodide.runPython(`
-            import ibdp_classes as ib
-            import io
-            import sys
-
-            code = globals()["pseudoCode"];
-            input_str = globals()["inputData"];
-
-            orig_stdin = sys.stdin
-            sys.stdin = io.StringIO(input_str)
-            output_str = str(ib.Pseudocode(code)())
-            sys.stdin = orig_stdin
-
-            print(output_str)
-        `);
-        let capturedOutput = pyodide.globals.get('captured_output');
-        let capturedError = pyodide.globals.get('captured_error');
-        let outputStr = pyodide.globals.get('output_str');
-        console.log(capturedOutput);
-        console.log(capturedError);
-        console.log(outputStr);
-
+        let outputStr = 'This is the output text.';
         document.getElementById('output').innerText = outputStr;
       }
 
       document.getElementById('runButton').addEventListener('click', runCode);
       document.getElementById('clearButton').addEventListener('click', () => {
-        document.getElementById('output').innerText = '';
+        document.getElementById('output').innerText = 'nothing here';
       });
 
       document.addEventListener('DOMContentLoaded', (event) => {
