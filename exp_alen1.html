@@ -31,13 +31,13 @@
       async function runCode(){
         const pseudoCode = document.getElementById('pseudoCode').value;
         const inputData = document.getElementById('inputData').value;
-        let outputStr = 'This is the output text.';
+        let outputStr = 'You typed this code:\n\n' + pseudoCode;
         document.getElementById('output').innerText = outputStr;
       }
 
       document.getElementById('runButton').addEventListener('click', runCode);
       document.getElementById('clearButton').addEventListener('click', () => {
-        document.getElementById('output').innerText = 'nothing here';
+        document.getElementById('output').innerText = 'Nothing here.';
       });
     </script>
 </body>
