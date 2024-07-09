@@ -49,77 +49,9 @@
         document.getElementById('output').innerText = 'nothing here';
       });
 
-      document.addEventListener('DOMContentLoaded', (event) => {
-        addOptionsToSelect();
-      });
-
-        const sampleOptions = [
-    { value: 'codeIntro', text: 'Introduction' },
-    { value: 'codeCalculations', text: 'Calculations' },
-    { value: 'codeMoneyDecisions', text: 'Money' },
-    { value: 'codeCommonFactors', text: 'Common Factors'},
-    { value: 'codeMathxyValues', text: 'Math xy Values'},
-    { value: 'inputAndEcho', text: 'Input and Echo'}
-];
-
-function addOptionsToSelect() {
-    const sampleSelect = document.getElementById('sampleSelect');
-    sampleSelect.innerHTML = '';
-
-    sampleOptions.forEach(option => {
-        // Check if the option already exists
-        if (!Array.from(sampleSelect.options).some(opt => opt.value === option.value)) {
-            const opt = document.createElement('option');
-            opt.value = option.value;
-            opt.textContent = option.text;
-            sampleSelect.appendChild(opt);
-        }
-    });
-
-    // Call this function here to set up the event listener after adding options
-    populateSamplesList();
+    document.getElementById('pseudoCode').value = ``;
+    document.getElementById('inputData').value = ``;
 }
-
-function populateSamplesList() {
-    const sampleSelect = document.getElementById('sampleSelect');
-    sampleSelect.addEventListener('change', (event) => {
-        const selectedSample = event.target.value;
-        
-        switch (selectedSample) {
-            case 'codeIntro':
-                document.getElementById('pseudoCode').value = `output "Welcome"
-loop COUNT from 1 to 5
-  output COUNT
-end loop`;
-                document.getElementById('inputData').value = ``;
-                break;
-            case 'codeCommonFactors':
-                document.getElementById('pseudoCode').value = ``;
-                document.getElementById('inputData').value = ``;
-                break;
-            case'codeMathxyValues':
-                document.getElementById('pseudoCode').value = ``;
-                document.getElementById('inputData').value = ``;
-                break;
-            case 'codeMoneyDecisions':
-                document.getElementById('pseudoCode').value = ``;
-                document.getElementById('inputData').value = ``;
-                break;
-            case 'codeCalculations':
-                document.getElementById('pseudoCode').value = ``;
-                document.getElementById('inputData').value = ``;
-                break;
-            case 'inputAndEcho':
-                document.getElementById('pseudoCode').value = ``;
-                document.getElementById('inputData').value = `15`;
-                break;
-        }
-    });
-}
-
-document.addEventListener('DOMContentLoaded', (event) => {
-    addOptionsToSelect();
-});
 
     </script>
 </body>
