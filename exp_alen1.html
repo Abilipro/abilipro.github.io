@@ -99,13 +99,7 @@ async function runCode(){
 
         const sampleOptions = [
     { value: 'inviteLine', text: 'Select a sample' },
-    { value: 'codeIntro', text: 'Introduction' },
-    { value: 'codeCalculations', text: 'Calculations' },
-    { value: 'codeMoneyDecisions', text: 'Money' },
-    { value: 'codeCommonFactors', text: 'Common Factors'},
     { value: 'codeMathxyValues', text: 'Math xy Values'},
-    { value: 'inputAndEcho', text: 'Input and Echo'}
-
 ];
 
 function addOptionsToSelect() {
@@ -134,41 +128,17 @@ function populateSamplesList() {
         const selectedSample = event.target.value;
         
         switch (selectedSample) {
-            case 'codeIntro':
-                document.getElementById('pseudoCode').value = `output "Welcome"
-loop COUNT from 1 to 5
-  output COUNT
-end loop
-
-                
-                document.getElementById('output').innerText = '';
-                document.getElementById('inputData').value = ``;
-        
-                break;
-
             case'codeMathxyValues':
                 document.getElementById('pseudoCode').value = `// === Table of Values for Math Function ===
-// This program uses a simple loop to produce a table
-// of x,y values for a math function.
-// Notice that the LOOP FOR command can only count by 1,
-// so the program divides by 2 to count by 0.5 each time.
-// Dividing by 2 only works if you divide by 2.0,
-// because C / 2 would do integer division, ignoring
-// the fractional result.
-
 output "X , Y"
-
 loop C from 0 to 10
    X = C / 2.0
    Y = 3*X*X - 7*X + 2
    output X , " , " , Y    
 end loop`;
-
                 document.getElementById('output').innerText = '';
                 document.getElementById('inputData').value = ``;
-        
                 break;
-
         }
     });
 }
