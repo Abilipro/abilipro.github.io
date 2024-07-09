@@ -5,18 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>IBCS Pseudocode Runner</title>
     <link href="styles.css" rel="stylesheet">
-    <script src="https://cdn.jsdelivr.net/pyodide/v0.26.1/full/pyodide.js"></script>
 </head>
 <body>
     <div class="align-container">
-        <div id="SamplesList">
-            <div class="sample-list-container">
-                <h2>Sample Programs</h2>
-                <select id="sampleSelect">
-                    <!-- Options will be added dynamically -->
-                </select>
-            </div>
-        </div>
         <div class="container">
             <div class="input-section">
                 <h2>Pseudocode</h2>
@@ -48,11 +39,6 @@
       document.getElementById('clearButton').addEventListener('click', () => {
         document.getElementById('output').innerText = 'nothing here';
       });
-
-    document.getElementById('pseudoCode').value = ``;
-    document.getElementById('inputData').value = ``;
-}
-
     </script>
 </body>
 </html>
