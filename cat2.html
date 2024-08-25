@@ -17,16 +17,6 @@
   
     gtag('config', 'G-77SX3Y9K8S');
   </script>
-<script>
-	document.getElementById('pseudoCode').addEventListener('input', function() {
-	    const textarea = document.getElementById('pseudoCode');
-	    const lines = textarea.value.split('\n');
-	    
-	    textarea.value = lines.map((line, index) => {
-	        return (index + 1) + '  ' + line;
-	    }).join('\n');
-	});
-</script>
 <body>
     <nav>
         <ul>
@@ -49,8 +39,7 @@
         <div class="container">
             <div class="input-section resizable">
                 <h2>Pseudocode</h2>
-		<textarea id="pseudoCode" rows="10" placeholder="Enter the code to run here, or select a program" style="color: purple; white-space: pre; font-family: monospace; line-height: 1.5em;"></textarea>
-                <!--<textarea id="pseudoCode" rows="10" placeholder="Enter the code to run here, or select a program" style="color: purple;"></textarea>-->
+                <textarea id="pseudoCode" rows="10" placeholder="Enter the code to run here, or select a program" style="color: purple;"></textarea>
 		<style>
 		  #pseudoCode::placeholder {
 		    color: #B19CD9;
