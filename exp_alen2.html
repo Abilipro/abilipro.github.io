@@ -79,7 +79,7 @@ let pyodideReadyPromise = (async () => {
 
 async function runCode(){
     const pseudoCode = document.getElementById('pseudoCode').value;
-    window.alert("sometext");
+    document.getElementById('output').innerText = "sometext";
 	
     const inputData = document.getElementById('inputData').value;
 
@@ -101,7 +101,7 @@ async function runCode(){
     `);
     
     let outputStr = pyodide.globals.get('output_str');
-    document.getElementById('output').innerText = outputStr;
+    document.getElementById('output').innerText += outputStr;
 }
 
       document.getElementById('runButton').addEventListener('click', runCode);
