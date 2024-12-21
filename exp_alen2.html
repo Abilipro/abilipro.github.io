@@ -79,7 +79,9 @@ let pyodideReadyPromise = (async () => {
 
 async function runCode(){
     const pseudoCode = document.getElementById('pseudoCode').value;
-    document.getElementById('output').innerText = pseudoCode;
+    document.getElementById('output').innerText = "The original pseudocode:\n" + pseudoCode + "\n";
+    pseudoCode.replace(/\/\/.*$/g, "");
+    document.getElementById('output').innerText += "The preprocessed pseudocode:\n" + pseudoCode + "\n";
 	
     const inputData = document.getElementById('inputData').value;
 
