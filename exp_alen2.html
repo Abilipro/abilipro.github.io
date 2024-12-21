@@ -79,6 +79,8 @@ let pyodideReadyPromise = (async () => {
 
 async function runCode(){
     const pseudoCode = document.getElementById('pseudoCode').value;
+    window.alert("sometext");
+	
     const inputData = document.getElementById('inputData').value;
 
     let pyodide = await pyodideReadyPromise;
