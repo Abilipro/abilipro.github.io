@@ -81,7 +81,7 @@ async function runCode(){
     const pseudoCode = document.getElementById('pseudoCode').value;
     document.getElementById('output').innerText = "The original pseudocode:\n" + pseudoCode + "\n";
     prepCode = pseudoCode;
-    prepCode.replace(/aa$/g, "bb");
+    prepCode = prepCode.replace(/aa$/g, "bb");
     document.getElementById('output').innerText += "The preprocessed pseudocode:\n" + prepCode + "\n";
 	
     const inputData = document.getElementById('inputData').value;
