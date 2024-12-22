@@ -102,7 +102,7 @@ async function runCode(){
     `);
     
     let outputStr = pyodide.globals.get('output_str');
-    document.getElementById('output').innerText += outputStr;
+//    document.getElementById('output').innerText += outputStr;
 }
 
       document.getElementById('runButton').addEventListener('click', runCode);
