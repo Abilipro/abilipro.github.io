@@ -79,7 +79,9 @@ let pyodideReadyPromise = (async () => {
 
 async function runCode(){
     pseudoCode = document.getElementById('pseudoCode').value;
+    document.getElementById('output').innerText += "\nThe original pseudocode:\n" + pseudoCode + "\n");
     originalCode = pseudoCode;
+    document.getElementById('output').innerText += "\nThe original pseudocode:\n" + originalCode + "\n");
     pseudoCode = pseudoCode.replace(/\r/g,"\n");
     pseudoCode = pseudoCode.replace(/\/\/.*\n/g,"\n");
     const inputData = document.getElementById('inputData').value;
@@ -103,8 +105,8 @@ async function runCode(){
     
     let outputStr = pyodide.globals.get('output_str');
     document.getElementById('output').innerText = outputStr;
-    document.getElementById('output').innerText += "\nThe original pseudocode:\n" + originalCode + "\n");
-    document.getElementById('output').innerText += "\nThe processed pseudocode:\n" + pseudoCode + "\n");
+    //document.getElementById('output').innerText += "\nThe original pseudocode:\n" + originalCode + "\n");
+    //document.getElementById('output').innerText += "\nThe processed pseudocode:\n" + pseudoCode + "\n");
 }
 
       document.getElementById('runButton').addEventListener('click', runCode);
