@@ -104,7 +104,7 @@ async function runCode(){
     `);
     
     let outputStr = pyodide.globals.get('output_str');
-    document.getElementById('output').innerText = outputStr;
+    document.getElementById('output').innerText += outputStr;
     //document.getElementById('output').innerText += "\nThe original pseudocode:\n" + originalCode + "\n");
     //document.getElementById('output').innerText += "\nThe processed pseudocode:\n" + pseudoCode + "\n");
 }
