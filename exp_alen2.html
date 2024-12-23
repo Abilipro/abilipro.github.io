@@ -81,6 +81,7 @@ async function runCode(){
     pseudoCode = document.getElementById('pseudoCode').value;
     pseudoCode = pseudoCode.replace(/\r/g,"\n");
     pseudoCode = pseudoCode.replace(/\/\/.*\n/g,"\n");
+    pseudoCode = pseudoCode.replace(/\/\/.*$/g,"\n");
     const inputData = document.getElementById('inputData').value;
 
     let pyodide = await pyodideReadyPromise;
